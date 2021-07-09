@@ -3,7 +3,7 @@ This Repository contains tutorial about react native
 
 ## How to use
 
-To run a project run `nom install`, after that, use `expo start` or `nom start` and the project run again
+To run a project run `nom install`, after that, use `expo start` or `npm start` and the project run again
 
 
 Videos:
