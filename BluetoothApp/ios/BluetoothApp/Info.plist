@@ -16,6 +16,8 @@
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleSignature</key>
     <string>????</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>None</string>
     <key>CFBundleShortVersionString</key>
     <string>1.0.0</string>
     <key>CFBundleVersion</key>
