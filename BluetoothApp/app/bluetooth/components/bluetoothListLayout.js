@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5fcff",
   },
   title: {
+    marginLeft: 10,
     fontSize: 20,
     fontWeight: "bold",
   },

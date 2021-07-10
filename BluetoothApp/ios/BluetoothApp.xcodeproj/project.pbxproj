@@ -15,6 +15,7 @@
 		96905EF65AED1B983A6B3ABC /* libPods-BluetoothApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-BluetoothApp.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		FFB8985E38A44CEF83113043 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128FFF609E784B699949035B /* noop-file.swift */; };
+		4840FC64D3EC4C0CA1241EF8 /* libRCTBluetoothSerial.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3F824AB3BEF4271B6100A51 /* libRCTBluetoothSerial.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,8 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		128FFF609E784B699949035B /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "BluetoothApp/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
 		078D8DC33DCE49EFAABFF491 /* BluetoothApp-Bridging-Header.h */ = {isa = PBXFileReference; name = "BluetoothApp-Bridging-Header.h"; path = "BluetoothApp/BluetoothApp-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		4B7BF90DB0B14D32AC84AC1C /* RCTBluetoothSerial.xcodeproj */ = {isa = PBXFileReference; name = "RCTBluetoothSerial.xcodeproj"; path = "../node_modules/react-native-bluetooth-serial-next/ios/RCTBluetoothSerial.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A3F824AB3BEF4271B6100A51 /* libRCTBluetoothSerial.a */ = {isa = PBXFileReference; name = "libRCTBluetoothSerial.a"; path = "libRCTBluetoothSerial.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +46,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96905EF65AED1B983A6B3ABC /* libPods-BluetoothApp.a in Frameworks */,
+				4840FC64D3EC4C0CA1241EF8 /* libRCTBluetoothSerial.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +84,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4B7BF90DB0B14D32AC84AC1C /* RCTBluetoothSerial.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -324,6 +329,14 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				SWIFT_OBJC_BRIDGING_HEADER = BluetoothApp/BluetoothApp-Bridging-Header.h;
 				CODE_SIGN_ENTITLEMENTS = BluetoothApp/bletoothapp.entitlements;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/bletoothapp\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-bluetooth-serial-next/ios/RCTBluetoothSerial",
+				);
 			};
 			name = Debug;
 		};
@@ -349,6 +362,14 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				SWIFT_OBJC_BRIDGING_HEADER = BluetoothApp/BluetoothApp-Bridging-Header.h;
 				CODE_SIGN_ENTITLEMENTS = BluetoothApp/bletoothapp.entitlements;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/bletoothapp\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-bluetooth-serial-next/ios/RCTBluetoothSerial",
+				);
 			};
 			name = Release;
 		};

@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   text: {
+    marginLeft: 10,
     fontWeight: "bold",
     fontSize: 20,
     flex: 1,

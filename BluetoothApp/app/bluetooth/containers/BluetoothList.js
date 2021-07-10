@@ -5,8 +5,9 @@ import Layout from "../components/bluetoothListLayout";
 import Empty from "../components/empty";
 import Toggle from "../components/toggle";
 import Subtitle from "../components/subtitle";
-//import BluetoothSerial from "react-native-bluetooth-serial-next";
-// import BluetoothManager from "react-native-ble-plx";
+import Device from "../components/device";
+// import BluetoothSerial from "react-native-bluetooth-serial-next";
+import BleManager from "react-native-ble-plx";
 
 function BluetoothList(props) {
   const list = [
@@ -15,6 +16,15 @@ function BluetoothList(props) {
   ];
 
   const renderEmpty = () => <Empty text="No hay dispositivos" />;
+  const renderItem = ({ item }) => {
+    return (
+      <Device
+        {...item}
+        iconLeft={require("../../../assets/favicon.png")}
+        iconRight={require("../../../assets/icon.png")}
+      />
+    );
+  };
 
   return (
     <Layout title="Bluetooth">
@@ -23,9 +33,7 @@ function BluetoothList(props) {
       <FlatList
         data={list}
         ListEmptyComponent={renderEmpty}
-        renderItem={({ item }) => (
-          <Text style={{ fontSize: 20 }}>{item.name}</Text>
-        )}
+        renderItem={renderItem}
       />
     </Layout>
   );
