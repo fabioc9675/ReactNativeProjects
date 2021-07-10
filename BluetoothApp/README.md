@@ -22,4 +22,6 @@ Link: https://blog.bam.tech/developer-news/make-a-react-native-app-from-scratch-
 
 Initializate the project with the follow command `npx react-native init BleProject --template react-native-template-typescript`, in case cocoapods doesn't work then use `sudo xcode-select --switch /Applications/Xcode.app`and then `cd ./BleProject/ios && pod install`.
 
-It is possible to use ´expo init BluetoothApp´ with typescript template and use ´expo eject´ inside the project folder to create android and iOS deployment folders, use names as ´com.example.projectname´ in both cases
+It is possible to use `expo init BluetoothApp` with typescript template and use `expo eject` inside the project folder to create android and iOS deployment folders, use names as `com.example.projectname` in both cases
+
+BLE dependency is availble on `npm install --save react-native-ble-plx`, then go to ios folder and use `pod update`

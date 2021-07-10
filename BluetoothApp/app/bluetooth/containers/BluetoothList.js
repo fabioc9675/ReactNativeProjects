@@ -6,11 +6,12 @@ import Empty from "../components/empty";
 import Toggle from "../components/toggle";
 import Subtitle from "../components/subtitle";
 //import BluetoothSerial from "react-native-bluetooth-serial-next";
+// import BluetoothManager from "react-native-ble-plx";
 
 function BluetoothList(props) {
   const list = [
     { name: "Cristhian", key: "1" },
-    { name: "Lara", key: "2" },
+    { name: "Laras", key: "2" },
   ];
 
   const renderEmpty = () => <Empty text="No hay dispositivos" />;
