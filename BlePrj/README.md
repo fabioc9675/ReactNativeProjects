@@ -26,4 +26,10 @@ It is possible to use `expo init BluetoothApp` with typescript template and use 
 
 BLE dependency is availble on `npm install --save react-native-ble-plx`, then go to ios folder and use `pod update`
 
+follow the react-native-ble-plx instruction to activate the BLE component, in `/ìos/projectName/info.plist` add the follow lines to activate BLE component
+`<key>NSBluetoothAlwaysUsageDescription</key>`
+`<string>Our app uses bluetooth to find, connect and transfer data between different devices</string>`
+
+## Xcode configuration
+
 Adding support for different operative sistem versions in Xcode `https://github.com/filsv/iPhoneOSDeviceSupport`
