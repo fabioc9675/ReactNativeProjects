@@ -30,7 +30,7 @@ follow the react-native-ble-plx instruction to activate the BLE component, in `/
 `<key>NSBluetoothAlwaysUsageDescription</key>`
 `<string>Our app uses bluetooth to find, connect and transfer data between different devices</string>`
 
-`https://github.com/dotintent/react-native-ble-plx`
+https://github.com/dotintent/react-native-ble-plx
 
 
 ## Xcode configuration
