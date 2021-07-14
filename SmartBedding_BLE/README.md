@@ -32,7 +32,9 @@ follow the react-native-ble-plx instruction to activate the BLE component, in `/
 
 https://github.com/dotintent/react-native-ble-plx
 
-
 ## Xcode configuration
 
 Adding support for different operative sistem versions in Xcode `https://github.com/filsv/iPhoneOSDeviceSupport`
+
+Installation of native-base:`npm install native-base styled-components styled-system`, `expo install expo-font`
+Link: https://www.youtube.com/watch?v=91vhZKjguh4
