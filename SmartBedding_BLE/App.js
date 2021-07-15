@@ -8,6 +8,7 @@ import {
   Button,
 } from "react-native";
 import { BleManager, Base64 } from "react-native-ble-plx";
+import { alignContent } from "styled-system";
 
 export default class SB_BLE extends Component {
   // creation of constructor for SB_BLE
@@ -34,19 +35,27 @@ export default class SB_BLE extends Component {
   };
 
   // function for disconnect device
-  disconnect = () => {
+  disconnect() {
     console.log("disconnect");
     this.setState({
       deviceid: "",
       text1: "Hola Fabian",
     });
-  };
+  }
 
   // function fos scan and connect device
-  scanAndConnect = () => {
+  scanAndConnect() {
     console.log("scan and connect");
     this.changeTextFunction();
-  };
+  }
+
+  // function for write message through ble
+  writeMessage(code, message) {
+    console.log(code);
+    this.setState({
+      text1: message,
+    });
+  }
 
   // creation of render function to put the components in the screen
   render() {
@@ -62,6 +71,20 @@ export default class SB_BLE extends Component {
         </View>
         <View style={styles.textBox}>
           <Text>{this.state.text1}</Text>
+        </View>
+        <View style={styles.fotter}>
+          <Button
+            title={"Ack"}
+            onPress={() => this.writeMessage("ACK", "ACK Writted")}
+          />
+          <Button
+            title={"Ris 0"}
+            onPress={() => this.writeMessage("Ris 0", "Ris 0 Writted")}
+          />
+          <Button
+            title={"Ris 1"}
+            onPress={() => this.writeMessage("Ris 1", "Ris 1 Writted")}
+          />
         </View>
         <StatusBar
           animated={true}
@@ -95,5 +118,13 @@ const styles = StyleSheet.create({
   textBox: {
     alignItems: "center",
     marginVertical: 10,
+  },
+  fotter: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "flex-end",
+    marginBottom: 50,
+    width: 280,
+    justifyContent: "space-between",
   },
 });
