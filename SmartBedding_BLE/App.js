@@ -39,18 +39,10 @@ export default class SB_BLE extends Component {
   fetchCats() {
     this.setState({
       devices: [
-        { name: "Fabian", key: "1", id: "a" },
-        { name: "Felipe", key: "2", id: "b" },
-        { name: "Margarita", key: "3", id: "c" },
-        { name: "Bernardo", key: "4", id: "d" },
-        { name: "Fabian", key: "5", id: "e" },
-        { name: "Felipe", key: "6", id: "f" },
-        { name: "Margarita", key: "7", id: "g" },
-        { name: "Bernardo", key: "8", id: "h" },
-        { name: "Fabian", key: "9", id: "i" },
-        { name: "Felipe", key: "10", id: "j" },
-        { name: "Margarita", key: "11", id: "k" },
-        { name: "Bernardo", key: "12", id: "l" },
+        { name: "Fabian", id: "1", key: "a" },
+        { name: "Felipe", id: "2", key: "b" },
+        { name: "Margarita", id: "3", key: "c" },
+        { name: "Bernardo", id: "4", key: "d" },
       ],
     });
   }
@@ -75,6 +67,8 @@ export default class SB_BLE extends Component {
   async scanAndConnect() {
     console.log("scan and connect");
     this.setState({ text1: "Scanning..." });
+
+    // begin device scanning
   }
 
   // function for write message through ble
@@ -83,6 +77,14 @@ export default class SB_BLE extends Component {
     this.setState({
       text1: message,
     });
+
+    var keys = this.state.devices.length + 1;
+    this.setState((prevState) => ({
+      devices: [
+        ...prevState.devices,
+        { name: "Fabian", key: "1", id: keys.toString() },
+      ],
+    }));
   }
 
   // creation of render function to put the components in the screen
