@@ -122,7 +122,7 @@ export default class SB_BLE extends Component {
           this.setState((prevState) => ({
             devices: [
               ...prevState.devices,
-              { name: device.name, id: device.id, key: device.id },
+              { name: device.name, id: device.id, key: device.id, dev: device },
             ],
           }));
         }
@@ -135,6 +135,70 @@ export default class SB_BLE extends Component {
         this.manager.stopDeviceScan();
         console.log("Stop scanning");
       }, 2000);
+    });
+  }
+
+  // function to connect to a device
+  async connectBleDevice(id, dev) {
+    this.setState({ text1: id });
+    //console.log(dev);
+    // connection sequence
+    this.manager
+      .connectToDevice(dev.id, { autoConnect: true })
+      .then((dev) => {
+        (async () => {
+          const services = await dev.discoverAllServicesAndCharacteristics();
+          //console.log("Services ....");
+          //console.log(services);
+          const characteristic = await this.getServicesAndCharacteristics(
+            services
+          );
+          console.log(
+            "Discovering services and characteristics",
+            characteristic.uuid
+          );
+        })();
+        this.setState({ device: dev });
+        return dev.discoverAllServicesAndCharacteristics();
+      })
+      .then((device) => {})
+      .then(
+        () => {
+          console.log("Listenning...");
+        },
+        (error) => {
+          this.alert("Connection error" + JSON.stringify(error));
+        }
+      );
+  }
+
+  // function to get services and characteristics
+  getServicesAndCharacteristics(device) {
+    return new Promise((resolve, reject) => {
+      device.services().then((services) => {
+        const characteristics = [];
+        console.log("ashu_1", services);
+        services.forEach((service, i) => {
+          service.characteristics().then((c) => {
+            console.log("service.characteristics");
+
+            characteristics.push(c);
+            console.log(characteristics);
+            if (i === services.length - 1) {
+              const temp = characteristics.reduce((acc, current) => {
+                return [...acc, ...current];
+              }, []);
+              const dialog = temp.find(
+                (characteristics) => characteristics.isWritableWithoutResponse
+              );
+              if (!dialog) {
+                reject("No writable characteristic");
+              }
+              resolve(dialog);
+            }
+          });
+        });
+      });
     });
   }
 
@@ -177,7 +241,7 @@ export default class SB_BLE extends Component {
               { item } // function to render the items inside the list
             ) => (
               <TouchableOpacity
-                onPress={() => this.setState({ text1: item.key })} // touchable propertie with on press function
+                onPress={() => this.connectBleDevice(item.key, item.dev)} // touchable propertie with on press function
               >
                 <Text style={styles.listText}>{item.name}</Text>
               </TouchableOpacity>
