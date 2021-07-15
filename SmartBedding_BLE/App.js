@@ -31,6 +31,7 @@ export default class SB_BLE extends Component {
     console.log("App is running");
   }
 
+  // function that is execute when component finish mount
   componentDidMount() {
     this.fetchCats();
   }
@@ -38,18 +39,18 @@ export default class SB_BLE extends Component {
   fetchCats() {
     this.setState({
       devices: [
-        { name: "Fabian", key: "1" },
-        { name: "Felipe", key: "2" },
-        { name: "Margarita", key: "3" },
-        { name: "Bernardo", key: "4" },
-        { name: "Fabian", key: "5" },
-        { name: "Felipe", key: "6" },
-        { name: "Margarita", key: "7" },
-        { name: "Bernardo", key: "8" },
-        { name: "Fabian", key: "9" },
-        { name: "Felipe", key: "10" },
-        { name: "Margarita", key: "11" },
-        { name: "Bernardo", key: "12" },
+        { name: "Fabian", key: "1", id: "a" },
+        { name: "Felipe", key: "2", id: "b" },
+        { name: "Margarita", key: "3", id: "c" },
+        { name: "Bernardo", key: "4", id: "d" },
+        { name: "Fabian", key: "5", id: "e" },
+        { name: "Felipe", key: "6", id: "f" },
+        { name: "Margarita", key: "7", id: "g" },
+        { name: "Bernardo", key: "8", id: "h" },
+        { name: "Fabian", key: "9", id: "i" },
+        { name: "Felipe", key: "10", id: "j" },
+        { name: "Margarita", key: "11", id: "k" },
+        { name: "Bernardo", key: "12", id: "l" },
       ],
     });
   }
@@ -101,10 +102,13 @@ export default class SB_BLE extends Component {
         </View>
         <View style={styles.listBox}>
           <FlatList
+            keyExtractor={(item) => item.id} // funtion for change the key
             data={this.state.devices}
-            renderItem={({ item }) => (
+            renderItem={(
+              { item } // function to render the items inside the list
+            ) => (
               <TouchableOpacity
-                onPress={() => this.setState({ text1: item.key })}
+                onPress={() => this.setState({ text1: item.key })} // touchable propertie with on press function
               >
                 <Text style={styles.listText}>{item.name}</Text>
               </TouchableOpacity>
@@ -159,7 +163,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   listBox: {
-    flex: 1,
+    flex: 3,
     backgroundColor: "#f2f2f2",
     alignItems: "flex-start",
     marginVertical: 10,
@@ -169,6 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     alignItems: "center",
     margin: 10,
+    width: 280,
   },
   fotter: {
     flex: 1,
