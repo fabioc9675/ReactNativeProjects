@@ -6,6 +6,9 @@ import {
   View,
   StatusBar,
   Button,
+  FlatList,
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import { BleManager, Base64 } from "react-native-ble-plx";
 import { alignContent } from "styled-system";
@@ -16,6 +19,7 @@ export default class SB_BLE extends Component {
     super();
     this.manager = new BleManager();
     this.state = {
+      devices: [],
       deviceid: "",
       serviceUUID: "",
       characteristicsUUID: "",
@@ -25,6 +29,29 @@ export default class SB_BLE extends Component {
       notificationReceiving: false,
     };
     console.log("App is running");
+  }
+
+  componentDidMount() {
+    this.fetchCats();
+  }
+
+  fetchCats() {
+    this.setState({
+      devices: [
+        { name: "Fabian", key: "1" },
+        { name: "Felipe", key: "2" },
+        { name: "Margarita", key: "3" },
+        { name: "Bernardo", key: "4" },
+        { name: "Fabian", key: "5" },
+        { name: "Felipe", key: "6" },
+        { name: "Margarita", key: "7" },
+        { name: "Bernardo", key: "8" },
+        { name: "Fabian", key: "9" },
+        { name: "Felipe", key: "10" },
+        { name: "Margarita", key: "11" },
+        { name: "Bernardo", key: "12" },
+      ],
+    });
   }
 
   changeTextFunction = () => {
@@ -44,9 +71,9 @@ export default class SB_BLE extends Component {
   }
 
   // function fos scan and connect device
-  scanAndConnect() {
+  async scanAndConnect() {
     console.log("scan and connect");
-    this.changeTextFunction();
+    this.setState({ text1: "Scanning..." });
   }
 
   // function for write message through ble
@@ -71,6 +98,18 @@ export default class SB_BLE extends Component {
         </View>
         <View style={styles.textBox}>
           <Text>{this.state.text1}</Text>
+        </View>
+        <View style={styles.listBox}>
+          <FlatList
+            data={this.state.devices}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => this.setState({ text1: item.key })}
+              >
+                <Text style={styles.listText}>{item.name}</Text>
+              </TouchableOpacity>
+            )}
+          />
         </View>
         <View style={styles.fotter}>
           <Button
@@ -118,6 +157,18 @@ const styles = StyleSheet.create({
   textBox: {
     alignItems: "center",
     marginVertical: 10,
+  },
+  listBox: {
+    flex: 1,
+    backgroundColor: "#f2f2f2",
+    alignItems: "flex-start",
+    marginVertical: 10,
+    width: 300,
+  },
+  listText: {
+    fontSize: 18,
+    alignItems: "center",
+    margin: 10,
   },
   fotter: {
     flex: 1,
