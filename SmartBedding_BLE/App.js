@@ -1,3 +1,4 @@
+import { result } from "lodash";
 import React, { Component, useState } from "react";
 import {
   SafeAreaView,
@@ -9,9 +10,13 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  Platform,
+  PermissionsAndroid,
 } from "react-native";
 import { BleManager, Base64 } from "react-native-ble-plx";
 import { alignContent } from "styled-system";
+
+const transactionId = "moniter";
 
 export default class SB_BLE extends Component {
   // creation of constructor for SB_BLE
@@ -31,20 +36,40 @@ export default class SB_BLE extends Component {
     console.log("App is running");
   }
 
-  // function that is execute when component finish mount
-  componentDidMount() {
-    this.fetchCats();
+  // function to unsafe mount
+  UNSAFE_componentWillMount() {
+    this.manager = new BleManager();
+    if (Platform.OS === "android" && Platform.Version >= 23) {
+      PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION
+      ).then((result) => {
+        if (result) {
+          console.log("Permission is OK");
+        } else {
+          PermissionsAndroid.requestPermission(
+            PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION
+          ).then((result) => {
+            if (result) {
+              console.log("User accept");
+            } else {
+              console.log("User refuse");
+            }
+          });
+        }
+      });
+    }
+    if (Platform.OS === "ios") {
+      console.log("Running on iOS");
+    }
   }
+  // function that is execute when component finish mount
+  componentDidMount() {}
 
-  fetchCats() {
-    this.setState({
-      devices: [
-        { name: "Fabian", id: "1", key: "a" },
-        { name: "Felipe", id: "2", key: "b" },
-        { name: "Margarita", id: "3", key: "c" },
-        { name: "Bernardo", id: "4", key: "d" },
-      ],
-    });
+  componentWillUnmount() {
+    this.manager.cancelTransaction(transactionId);
+    this.manager.stopDeviceScan();
+    this.manager.destroy();
+    delete this.manager;
   }
 
   changeTextFunction = () => {
@@ -67,8 +92,50 @@ export default class SB_BLE extends Component {
   async scanAndConnect() {
     console.log("scan and connect");
     this.setState({ text1: "Scanning..." });
+    this.setState({ devices: [] });
 
     // begin device scanning
+    this.manager.startDeviceScan(null, null, (error, device) => {
+      console.log("Scanning...");
+      if (null) {
+        console.log("null");
+      }
+      if (error) {
+        this.alert("Error in scan => " + error);
+        this.setState({ text1: "" });
+        this.manager.stopDeviceScan();
+        return;
+      }
+      if (device.name) {
+        console.log("testing");
+        console.log(device.name);
+        console.log(device.id);
+
+        var alrExist = false;
+        this.state.devices.forEach((element) => {
+          if (element.id === device.id) {
+            alrExist = true;
+          }
+        });
+
+        if (alrExist === false) {
+          this.setState((prevState) => ({
+            devices: [
+              ...prevState.devices,
+              { name: device.name, id: device.id, key: device.id },
+            ],
+          }));
+        }
+      } else {
+        console.log("Not devices...");
+        this.manager.stopDeviceScan();
+      }
+
+      setTimeout(() => {
+        this.manager.stopDeviceScan();
+        console.log("Stop scanning");
+      }, 2000);
+    });
   }
 
   // function for write message through ble
