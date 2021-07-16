@@ -260,6 +260,27 @@ export default class SB_BLE extends Component {
     }
   }
 
+  // function for write message through ble
+  async readMessage() {
+    this.manager.cancelTransaction(transactionId);
+    var device = this.state.device;
+    console.log("Message to read ");
+    if (device) {
+      device
+        .readCharacteristicForService(
+          this.state.serviceUUID,
+          this.state.characteristicsUUID
+        )
+        .then((character) => {
+          console.log("Read.......");
+          console.log(base64.decode(character.value));
+        })
+        .catch((error) => console.log(error));
+    } else {
+      console.log("No device is connected");
+    }
+  }
+
   // creation of render function to put the components in the screen
   render() {
     return (
@@ -291,10 +312,7 @@ export default class SB_BLE extends Component {
           />
         </View>
         <View style={styles.fotter}>
-          <Button
-            title={"Ack"}
-            onPress={() => this.writeMessage("ACK", "ACK Writted")}
-          />
+          <Button title={"Ack"} onPress={() => this.readMessage()} />
           <Button
             title={"Ris 0"}
             onPress={() => this.writeMessage("Ris 0", "Ris 0 Writted")}
