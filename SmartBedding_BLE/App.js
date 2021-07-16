@@ -281,6 +281,30 @@ export default class SB_BLE extends Component {
     }
   }
 
+  // function for write message through ble
+  async monitorMessage() {
+    this.manager.cancelTransaction(transactionId);
+    var device = this.state.device;
+    console.log("Message to monitor ");
+    if (device) {
+      device.monitorCharacteristicForService(
+        this.state.serviceUUID,
+        this.state.characteristicsUUID,
+        (error, characteristic) => {
+          if (error) {
+            console.log(error);
+          }
+          if (characteristic) {
+            console.log("monitor.......");
+            console.log(base64.decode(characteristic.value));
+          }
+        }
+      );
+    } else {
+      console.log("No device is connected");
+    }
+  }
+
   // creation of render function to put the components in the screen
   render() {
     return (
@@ -317,10 +341,7 @@ export default class SB_BLE extends Component {
             title={"Ris 0"}
             onPress={() => this.writeMessage("Ris 0", "Ris 0 Writted")}
           />
-          <Button
-            title={"Ris 1"}
-            onPress={() => this.writeMessage("Ris 1", "Ris 1 Writted")}
-          />
+          <Button title={"Ris 1"} onPress={() => this.monitorMessage()} />
         </View>
         <StatusBar
           animated={true}
