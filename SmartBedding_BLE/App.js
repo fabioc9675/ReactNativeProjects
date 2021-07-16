@@ -12,7 +12,8 @@ import {
   Platform,
   PermissionsAndroid,
 } from "react-native";
-import { BleManager, Base64 } from "react-native-ble-plx";
+import base64 from "react-native-base64";
+import { BleManager } from "react-native-ble-plx";
 
 const transactionId = "moniter";
 
@@ -223,19 +224,16 @@ export default class SB_BLE extends Component {
   }
 
   // function for write message through ble
-  writeMessage(code, message) {
+  async writeMessage(code, message) {
     console.log(code);
     this.setState({
       text1: message,
     });
 
-    var keys = this.state.devices.length + 1;
-    this.setState((prevState) => ({
-      devices: [
-        ...prevState.devices,
-        { name: "Fabian", key: "1", id: keys.toString() },
-      ],
-    }));
+    this.manager.cancelTransaction(transactionId);
+    var device = this.state.device;
+    const sendData = base64.encode(message);
+    console.log("Message to send ", sendData);
   }
 
   // creation of render function to put the components in the screen
