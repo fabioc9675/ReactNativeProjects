@@ -1,4 +1,3 @@
-import { result } from "lodash";
 import React, { Component, useState } from "react";
 import {
   SafeAreaView,
@@ -13,8 +12,7 @@ import {
   Platform,
   PermissionsAndroid,
 } from "react-native";
-import { BleManager, Base64, Characteristic } from "react-native-ble-plx";
-import { alignContent } from "styled-system";
+import { BleManager, Base64 } from "react-native-ble-plx";
 
 const transactionId = "moniter";
 
@@ -82,9 +80,23 @@ export default class SB_BLE extends Component {
   // function for disconnect device
   disconnect() {
     console.log("disconnect");
-    this.setState({
-      deviceid: "",
-      text1: "Hola Fabian",
+
+    return new Promise((resolve, reject) => {
+      this.manager
+        .cancelDeviceConnection(this.state.deviceid)
+        .then((rest) => {
+          console.log(rest);
+          let cleanState = {};
+          Object.keys(this.state).forEach((x) => {
+            if (x == "makedata") {
+              cleanState[x] = [];
+            } else {
+              cleanState[x] = null;
+            }
+          });
+          this.setState(cleanState);
+        })
+        .catch((err) => console.log("error on cancel connection", err));
     });
   }
 
