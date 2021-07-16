@@ -170,9 +170,11 @@ export default class SB_BLE extends Component {
             "Discovering services and characteristics",
             characteristic.uuid
           );
+          console.log("fab serv----- ", characteristic.serviceUUID);
+          console.log("fab char----- ", characteristic.uuid);
           this.setState({
             deviceid: dev.id,
-            serviceUUID: services.uuid,
+            serviceUUID: characteristic.serviceUUID,
             characteristicsUUID: characteristic.uuid,
             device: dev,
           });
@@ -234,6 +236,28 @@ export default class SB_BLE extends Component {
     var device = this.state.device;
     const sendData = base64.encode(message);
     console.log("Message to send ", sendData);
+    if (device) {
+      device
+        .writeCharacteristicWithResponseForService(
+          this.state.serviceUUID,
+          this.state.characteristicsUUID,
+          sendData
+        )
+        .then((characteristic) => {
+          console.log("write response");
+
+          // Sent message and start receiving data
+          console.log("Service");
+          console.log(
+            this.state.serviceUUID,
+            "Characteristic",
+            this.state.characteristicsUUID
+          );
+        })
+        .catch((error) => console.log(error));
+    } else {
+      console.log("No device is connected");
+    }
   }
 
   // creation of render function to put the components in the screen
