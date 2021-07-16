@@ -13,7 +13,7 @@ import {
   Platform,
   PermissionsAndroid,
 } from "react-native";
-import { BleManager, Base64 } from "react-native-ble-plx";
+import { BleManager, Base64, Characteristic } from "react-native-ble-plx";
 import { alignContent } from "styled-system";
 
 const transactionId = "moniter";
@@ -157,6 +157,14 @@ export default class SB_BLE extends Component {
             "Discovering services and characteristics",
             characteristic.uuid
           );
+          this.setState({
+            deviceid: dev.id,
+            serviceUUID: services.uuid,
+            characteristicsUUID: characteristic.uuid,
+            device: dev,
+          });
+          //console.log(this.state);
+          this.setState({ text1: "connected to " + dev.name });
         })();
         this.setState({ device: dev });
         return dev.discoverAllServicesAndCharacteristics();
