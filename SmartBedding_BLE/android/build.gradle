@@ -30,6 +30,10 @@ allprojects {
             // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")
         }
+        maven { 
+            // add support for Bluetooth Low Energy driver
+            url 'https://www.jitpack.io'
+        }
 
         google()
         jcenter()

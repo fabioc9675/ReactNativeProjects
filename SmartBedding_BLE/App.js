@@ -55,6 +55,7 @@ export default class SB_BLE extends Component {
             }
           });
         }
+        console.log("Running on Android");
       });
     }
     if (Platform.OS === "ios") {
@@ -114,7 +115,12 @@ export default class SB_BLE extends Component {
         console.log("null");
       }
       if (error) {
-        this.alert("Error in scan => " + error);
+        if (Platform.OS === "ios") {
+          this.alert("Error in scan => " + error);
+        } else {
+          console.log("Error in scan => " + error);
+        }
+
         this.setState({ text1: "" });
         this.manager.stopDeviceScan();
         return;
@@ -190,7 +196,11 @@ export default class SB_BLE extends Component {
           console.log("Listenning...");
         },
         (error) => {
-          this.alert("Connection error" + JSON.stringify(error));
+          if (Platform.OS === "ios") {
+            this.alert("Connection error" + JSON.stringify(error));
+          } else {
+            console.log("Connection error" + JSON.stringify(error));
+          }
         }
       );
   }
@@ -343,13 +353,15 @@ export default class SB_BLE extends Component {
           />
           <Button title={"Ris 1"} onPress={() => this.monitorMessage()} />
         </View>
-        <StatusBar
-          animated={true}
-          backgroundColor="#61dafb"
-          barStyle="dark-content"
-          showHideTransition="none"
-          hidden="Visible"
-        />
+        {Platform.OS === "ios" && ( // add status bar just for ios component
+          <StatusBar
+            animated={true}
+            backgroundColor="#61dafb"
+            barStyle="dark-content"
+            showHideTransition="none"
+            hidden="Visible"
+          />
+        )}
       </SafeAreaView>
     );
   }
