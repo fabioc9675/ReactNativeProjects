@@ -14,6 +14,17 @@ Projects with functionality: https://www.youtube.com/c/reactuikit/videos
 
 MQTT broker: https://www.youtube.com/watch?v=1ENh4MHdzRY
 
+## DataBases on Raspberry Pi
+
+Links:
+
+- https://www.youtube.com/watch?v=7ksQP4xAyNo&t=2s
+- https://www.raspberrypi.org/documentation/remote-access/web-server/apache.md
+- https://pimylifeup.com/raspberry-pi-mysql/
+
+User: root
+Pass: root
+
 
 ## Author
 
