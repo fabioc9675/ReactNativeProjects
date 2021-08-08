@@ -4,7 +4,7 @@ import { StyleSheet, TextInput } from "react-native";
 const Input = (props) => (
   <TextInput
     placeholder={props.texto}
-    style={StyleSheet.input}
+    style={styles.input}
     onChangeText={props.campo}
     value={props.valor}
   ></TextInput>
@@ -12,9 +12,11 @@ const Input = (props) => (
 
 const styles = StyleSheet.create({
   input: {
+    fontSize: 16,
     borderBottomWidth: 1,
     width: 240,
-    marginVertical: 5,
+    height: 20,
+    marginVertical: 10,
   },
 });
 

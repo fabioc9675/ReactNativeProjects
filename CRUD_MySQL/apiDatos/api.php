@@ -2,6 +2,13 @@
  
 class Api{
 
+
+function console_log( $data ){
+    echo '<script>';
+    echo 'console.log('. json_encode( $data ) .')';
+    echo '</script>';
+}
+
 public function getDatos(){
      $vector = array();
      $conexion = new Conexion();
@@ -19,11 +26,11 @@ public function getDatos(){
      return $vector;
 }
 
-public function addDato($usuario, $topico, $dato){
+public function addDato($topico, $usuario, $dato){
   
   $conexion = new Conexion();
   $db = $conexion->getConexion();
-  $sql = "INSERT INTO `MQTT_DATOS` (USUARIO, TOPIC, DATO) VALUES (:USUARIO,:TOPIC,:DATO)";
+  $sql = "INSERT INTO `MQTT_DATOS` (`USUARIO`, `TOPIC`, `DATO`) VALUES (:USUARIO,:TOPIC,:DATO)";
   $consulta = $db->prepare($sql);
   $consulta->bindParam(':USUARIO', $usuario);
   $consulta->bindParam(':TOPIC', $topico);

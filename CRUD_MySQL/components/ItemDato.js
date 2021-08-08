@@ -3,15 +3,15 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const ItemDato = (props) => (
-  <View style={StyleSheet.cardView}>
+  <View style={styles.cardView}>
     <Text style={{ textTransform: "uppercase", fontWeight: "bold" }}>
-      {props.usuario}
+      {props.USUARIO}
     </Text>
     <Text style={{ textTransform: "uppercase", color: "green" }}>
-      {props.topico}
+      {props.TOPIC}
     </Text>
     <Text style={{ textTransform: "uppercase", color: "blue" }}>
-      {props.dato}
+      {props.DATO}
     </Text>
     <View style={{ flexDirection: "row-reverse" }}>
       <TouchableOpacity

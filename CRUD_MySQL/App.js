@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,10 +16,10 @@ import Input from "./components/Input";
 
 export default function App() {
   const [listaDatos, setListaDatos] = useState([]);
-  const [usuario, setUsuario] = useState("");
-  const [topico, setTopico] = useState("");
-  const [dato, setDato] = useState("");
-  const [id, setId] = useState("");
+  const [USUARIO, setUsuario] = useState("");
+  const [TOPIC, setTopico] = useState("");
+  const [DATO, setDato] = useState("");
+  const [ID, setId] = useState("");
   const [bandera, setBandera] = useState(false);
 
   console.log("MySQL App Running");
@@ -33,7 +34,7 @@ export default function App() {
   };
 
   const addDato = async () => {
-    const obj = { topico, usuario, dato };
+    const obj = { TOPIC, USUARIO, DATO };
     console.log(obj);
     const respuesta = await axios.post("http://192.168.1.157/apiDatos/", obj);
     alert(respuesta.data.msg);
@@ -44,7 +45,7 @@ export default function App() {
   };
 
   const deleteDato = async (props) => {
-    const id = props.id;
+    const id = props.ID;
     const respuesta = await axios.delete(
       "http://192.168.1.157/apiDatos/?ID=" + id
     );
@@ -53,7 +54,7 @@ export default function App() {
   };
 
   const getDato = async (props) => {
-    const id = props.id;
+    const id = props.ID;
     const respuesta = await axios.get(
       "http://192.168.1.157/apiDatos/?ID=" + id
     );
@@ -84,43 +85,53 @@ export default function App() {
 
   const renderItem = ({ item }) => (
     <ItemDato
-      id={item.ID}
+      ID={item.ID}
       getDato={getDato}
-      usuario={item.USUARIO}
-      topico={item.TOPIC}
-      dato={item.DATO}
+      USUARIO={item.USUARIO}
+      TOPIC={item.TOPIC}
+      DATO={item.DATO}
       mypress={deleteDato}
     />
   );
 
   return (
-    <View style={styles.container}>
-      <Text>Hola Fabian!</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Hola Fabian!</Text>
 
       <View style={{ flex: 0.1, marginTop: 20, marginBottom: 25 }}>
         <Text style={{ fontWeight: "bold", color: "#0E69E5", fontSize: 20 }}>
           CRUD REACT NATIVE PHP Y MYSQL
         </Text>
       </View>
-      <Input texto={"Usuario"} valor={usuario} campo={(e) => setUsuario(e)} />
-      <Input texto={"Topico"} valor={topico} campo={(e) => setTopico(e)} />
-      <Input texto={"Dato"} valor={dato} campo={(e) => setDato(e)} />
+      <Input texto={"Usuario"} valor={USUARIO} campo={(e) => setUsuario(e)} />
+      <Input texto={"Topico"} valor={TOPIC} campo={(e) => setTopico(e)} />
+      <Input texto={"Dato"} valor={DATO} campo={(e) => setDato(e)} />
       <TouchableOpacity
-        style={{ backgroundColor: "#0E69E5", padding: 15, borderRadius: 12 }}
+        style={{
+          backgroundColor: "#0E69E5",
+          padding: 15,
+          borderRadius: 12,
+          width: 100,
+          alignItems: "center",
+        }}
         onPress={addOrUpdate}
       >
         <Text style={{ color: "#fff" }}>{bandera ? "Edit" : "Add"}</Text>
       </TouchableOpacity>
 
       <FlatList
-        style={{ marginTop: 15 }}
+        style={{
+          marginTop: 15,
+          width: 250,
+          marginHorizontal: 20,
+        }}
         data={listaDatos}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.ID}
       />
 
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -130,5 +141,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  title: {
+    fontSize: 18,
+    marginTop: 20,
   },
 });
