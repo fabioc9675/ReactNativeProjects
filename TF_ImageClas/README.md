@@ -7,7 +7,7 @@ Install the follow packages
 - `npm install @tensorflow/tfjs`
 - `npm install @tensorflow-models/mobilenet`
 - `npm install --force @tensorflow/tfjs-react-native@alpha`
-- `jpeg-js`
+- `npm install jpeg-js`
 
 Not sure if it is neccesary but:
 
