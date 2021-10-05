@@ -16,3 +16,13 @@ routes: contains routing between code
 `npm install express` framework for nodejs
 `npm install nodemon -D` to automatically restart server when the code changes
 `npm install morgan` allows to watch the request from clients
+`npm install mongoose` allows to connect withh database
+
+## Local Database
+
+### Initialization
+
+- `sudo apt install mongodb`
+- `sudo systemctl enable mongodb`
+- `sudo systemctl start mongodb`
+- `mongod` these commands initiate the daemon to execute mongodb

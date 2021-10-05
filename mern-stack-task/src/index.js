@@ -3,6 +3,8 @@ const morgan = require("morgan");
 const path = require("path");
 const app = express(); // server
 
+const { mongoose } = require("./database");
+
 // Settings
 app.set("port", process.env.PORT || 3000); // takes the port provided for the server or other
 
