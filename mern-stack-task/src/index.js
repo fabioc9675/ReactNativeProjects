@@ -10,6 +10,7 @@ app.use(morgan("dev")); // creates a log for clients that request access to the 
 app.use(express.json()); // every data that arrives to the server enters to this and it verifies if the data is a json
 
 // Routes
+app.use("/api/task", require("./routes/task.routes")); // adding prefix to the route
 
 // Static files
 
