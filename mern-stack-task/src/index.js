@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const path = require("path");
 const app = express(); // server
 
 // Settings
@@ -13,6 +14,8 @@ app.use(express.json()); // every data that arrives to the server enters to this
 app.use("/api/task", require("./routes/task.routes")); // adding prefix to the route
 
 // Static files
+// console.log(path.join(__dirname, "public"));
+app.use(express.static(path.join(__dirname, "public"))); // use html file inside public folder
 
 // Starting the server
 app.listen(app.get("port"), () => {
