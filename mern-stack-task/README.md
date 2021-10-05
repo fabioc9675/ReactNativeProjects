@@ -14,3 +14,5 @@ routes: contains routing between code
 ## Modules
 
 `npm install express` framework for nodejs
+`npm install nodemon -D` to automatically restart server when the code changes
+`npm install morgan` allows to watch the request from clients
