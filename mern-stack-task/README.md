@@ -25,6 +25,8 @@ routes: contains routing between code
 
 Use of MaterializeCSS through CDN `www.materializecss.com` copy the CSS part into index.html, alse add the icons provided for materialize
 
+It is necessary to add JSON Web Token to guarant that the res api is just accessed by the app, and the use of login
+
 ## Local Database
 
 ### Initialization
