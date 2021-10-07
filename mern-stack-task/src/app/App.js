@@ -14,7 +14,22 @@ class App extends Component {
   }
 
   addTask(e) {
-    console.log(this.state);
+    // send data to the server
+    fetch("/api/task", {
+      method: "POST",
+      body: JSON.stringify(this.state),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) =>
+        res.json().then((data) => {
+          console.log(data);
+          M.toast({ html: "Task Saved" });
+        })
+      )
+      .catch((err) => console.error(err));
     e.preventDefault();
   }
 
