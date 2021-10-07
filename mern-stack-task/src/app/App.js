@@ -6,6 +6,7 @@ class App extends Component {
     this.state = {
       title: "",
       description: "",
+      tasks: [],
     };
 
     // associate events to the functions in the class
@@ -28,6 +29,7 @@ class App extends Component {
           console.log(data);
           M.toast({ html: "Task Saved" });
           this.setState({ title: "", description: "" });
+          this.fetchTask(); // ask for the task in the server when the write of new task was done
         })
       )
       .catch((err) => console.error(err));
@@ -39,6 +41,23 @@ class App extends Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  componentDidMount() {
+    console.log("Component was mounted");
+    this.fetchTask();
+  }
+
+  // function to make a query to DataBase
+  fetchTask() {
+    fetch("/api/task")
+      .then((res) =>
+        res.json().then((data) => {
+          this.setState({ tasks: data });
+          console.log(this.state.tasks);
+        })
+      )
+      .catch((err) => console.error(err));
   }
 
   render() {
@@ -88,7 +107,26 @@ class App extends Component {
                 </div>
               </div>
             </div>
-            <div className="col s7"></div>
+            <div className="col s7">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.tasks.map((task) => {
+                    return (
+                      <tr key={task._id}>
+                        <td>{task.title}</td>
+                        <td>{task.description}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
