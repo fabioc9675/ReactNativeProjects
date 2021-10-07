@@ -23,6 +23,10 @@ routes: contains routing between code
 `npm install babel-core babel-loader -D` translate jsx code use babel-loader@7
 `npm install babel-preset-react babel-preset-env -D` translate for React
 
+Use of MaterializeCSS through CDN
+`www.materializecss.com`
+copy the CSS part into index.html, alse add the icons provided for materialize
+
 ## Local Database
 
 ### Initialization
