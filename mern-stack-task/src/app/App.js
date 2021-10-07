@@ -4,6 +4,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      _id: "",
       title: "",
       description: "",
       tasks: [],
@@ -16,23 +17,41 @@ class App extends Component {
 
   addTask(e) {
     // send data to the server
-    fetch("/api/task", {
-      method: "POST",
-      body: JSON.stringify(this.state),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) =>
+    if (this.state._id) {
+      fetch(`/api/task/id/${this.state._id}`, {
+        method: "PUT",
+        body: JSON.stringify(this.state),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then((res) =>
         res.json().then((data) => {
           console.log(data);
-          M.toast({ html: "Task Saved" });
-          this.setState({ title: "", description: "" });
+          M.toast({ html: "Task Update" });
+          this.setState({ title: "", description: "", _id: "" });
           this.fetchTask(); // ask for the task in the server when the write of new task was done
         })
-      )
-      .catch((err) => console.error(err));
+      );
+    } else {
+      fetch("/api/task", {
+        method: "POST",
+        body: JSON.stringify(this.state),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) =>
+          res.json().then((data) => {
+            console.log(data);
+            M.toast({ html: "Task Saved" });
+            this.setState({ title: "", description: "", _id: "" });
+            this.fetchTask(); // ask for the task in the server when the write of new task was done
+          })
+        )
+        .catch((err) => console.error(err));
+    }
     e.preventDefault();
   }
 
@@ -78,6 +97,21 @@ class App extends Component {
         })
       );
     }
+  }
+
+  editTask(id) {
+    fetch(`/api/task/id/${id}`)
+      .then((res) =>
+        res.json().then((data) => {
+          console.log(data);
+          this.setState({
+            _id: data._id,
+            title: data.title,
+            description: data.description,
+          });
+        })
+      )
+      .catch((err) => console.error(err));
   }
 
   render() {
@@ -142,7 +176,10 @@ class App extends Component {
                         <td>{task.title}</td>
                         <td>{task.description}</td>
                         <td>
-                          <button className="btn light-blue darken-4">
+                          <button
+                            className="btn light-blue darken-4"
+                            onClick={() => this.editTask(task._id)}
+                          >
                             <i className="material-icons">edit</i>
                           </button>
                           <button
