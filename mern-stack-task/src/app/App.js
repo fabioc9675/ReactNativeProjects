@@ -27,6 +27,7 @@ class App extends Component {
         res.json().then((data) => {
           console.log(data);
           M.toast({ html: "Task Saved" });
+          this.setState({ title: "", description: "" });
         })
       )
       .catch((err) => console.error(err));
@@ -65,6 +66,7 @@ class App extends Component {
                           type="text"
                           placeholder="Task Title"
                           onChange={this.handleChange}
+                          value={this.state.title}
                         ></input>
                       </div>
                     </div>
@@ -75,6 +77,7 @@ class App extends Component {
                           className="materialize-textarea"
                           placeholder="Task Description"
                           onChange={this.handleChange}
+                          value={this.state.description}
                         ></textarea>
                       </div>
                     </div>
