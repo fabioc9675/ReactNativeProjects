@@ -1,8 +1,17 @@
 import React, { Component } from "react";
 
+import axios from "axios";
+
 class TaskList extends Component {
   state = {
     task: "",
+  };
+
+  onSubmitClic = () => {
+    // calling of endpoint
+    axios.post("http://localhost:4000/addTask", {
+      task: this.state.task,
+    });
   };
 
   onDeleteClic = () => {
@@ -24,7 +33,12 @@ class TaskList extends Component {
             placeholder="your task..."
           />
         </div>
-        <button className="ui primary button basic">Submit</button>
+        <button
+          className="ui primary button basic"
+          onClick={() => this.onSubmitClic()}
+        >
+          Submit
+        </button>
         <hr />
         <div className="ui cards">
           <div className="card">
