@@ -11,7 +11,13 @@ app.use(bodyParser.json());
 
 // function to get all task
 app.get("/task", (req, res) => {
-  res.send("list of all task");
+  const SELECT_QUERY = `SELECT * FROM TASKS`;
+
+  connection.query(SELECT_QUERY, (err, result) => {
+    if (err) console.log(err);
+    console.log(result);
+    res.send(result);
+  });
 });
 
 // function to add task
