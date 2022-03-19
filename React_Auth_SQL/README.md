@@ -2,7 +2,7 @@
 
 Application to configurate SQL server and REACT Frontend
 
-# Frontend
+## Frontend
 
 It is necessary to install react in root folder
 
@@ -11,7 +11,7 @@ It is necessary to install react in root folder
 - Insert semantic ui `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />`
 - Install axios to do request to the backend `npm install axios`
 
-# Backend
+## Backend
 
 Server installation
 
@@ -21,3 +21,10 @@ Server installation
 - to parser date `npm install body-parser`
 - to make a server connection `npm install mysql mysql2`
 - to manage env variables `npm install dotenv`
+
+## Auth development
+
+Include packages to development, it will be create under view-controller model
+
+- ejs, express `npm install ejs express`
+- Install router `npm install react-router react-router-dom`

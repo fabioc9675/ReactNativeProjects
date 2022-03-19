@@ -1,11 +1,17 @@
-import logo from "./logo.svg";
 import "./App.css";
-import TaskList from "./Components/taskList";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./Views/home";
+import Smoothies from "./Views/smoothies";
 
 function App() {
   return (
     <div className="App">
-      <TaskList />
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/smoothies" element={<Smoothies />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
