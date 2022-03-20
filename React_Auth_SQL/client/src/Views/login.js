@@ -17,23 +17,33 @@ export default function LogIn() {
   }, []);
 
   function handleClick() {
-    const jsonPipe = JSON.stringify({ user: "Fabian", password: "test12345" });
+    const jsonPipe = JSON.stringify({
+      user: "FabianLogin",
+      password: "test12345",
+    });
     console.log(jsonPipe);
 
     // calling of endpoint
-    axios
-      .post("http://localhost:4000/login", jsonPipe, {
-        headers: {
-          // Overwrite Axios's automatically set Content-Type
-          "Content-Type": "application/json",
-        },
-      })
+
+    logPost(jsonPipe)
       .then((response) => {
         setRequest(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  // async function to make the request to the database
+  async function logPost(jsonData) {
+    const response = await axios.post("http://localhost:4000/login", jsonData, {
+      headers: {
+        // Overwrite Axios's automatically set Content-Type
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response;
   }
 
   return (

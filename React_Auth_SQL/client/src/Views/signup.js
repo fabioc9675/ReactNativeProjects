@@ -27,23 +27,37 @@ class SignUp extends Component {
   }
 
   handleClick() {
-    const jsonPipe = JSON.stringify({ user: "Fabian", password: "test12345" });
+    const jsonPipe = JSON.stringify({
+      user: "FabianSignUp",
+      password: "test12345",
+    });
     console.log(jsonPipe);
 
     // calling of endpoint
-    axios
-      .post("http://localhost:4000/signup", jsonPipe, {
-        headers: {
-          // Overwrite Axios's automatically set Content-Type
-          "Content-Type": "application/json",
-        },
-      })
+
+    this.signPost(jsonPipe)
       .then((response) => {
         this.setState({ request: response.data });
       })
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  // async function to make the request to the database
+  async signPost(jsonData) {
+    const response = await axios.post(
+      "http://localhost:4000/signup",
+      jsonData,
+      {
+        headers: {
+          // Overwrite Axios's automatically set Content-Type
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response;
   }
 
   render() {
