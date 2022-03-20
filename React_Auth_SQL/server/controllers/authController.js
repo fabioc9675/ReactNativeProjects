@@ -33,8 +33,6 @@ module.exports.signup_post = async (req, res) => {
   console.log("new signup");
   console.log(USER_NAME, USER_PASS, USER_TOKEN, USER_MAIL);
 
-  io.emit("message", "Hola mundo"); // emit some message from socket
-
   try {
     const user = await Users.create({
       USER_NAME: USER_NAME,
@@ -42,6 +40,7 @@ module.exports.signup_post = async (req, res) => {
       USER_TOKEN: USER_TOKEN,
       USER_MAIL: USER_MAIL,
     });
+    io.emit("message", "New User registered"); // emit some message from socket
     res.status(201).send(user.USER_NAME); // .send("new signup requested");
   } catch (error) {
     const errors = handleErrors(error);
