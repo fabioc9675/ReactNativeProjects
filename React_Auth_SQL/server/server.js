@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 const connection = require("./db");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
@@ -37,6 +38,9 @@ app.post("/addTask", (req, res) => {
 app.get("/deleteTask", (req, res) => {
   res.send("delete task");
 });
+
+// link server functions to authentication methods
+app.use(authRoutes);
 
 app.listen(4000, () => {
   console.log("running on port 4000");
