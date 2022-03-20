@@ -9,13 +9,17 @@ module.exports.login_get = (req, res) => {
 };
 
 module.exports.signup_post = (req, res) => {
+  const { username, password } = req.body; // need to have the same variable name that in the json structure from frontend
+
   res.send("new signup requested");
   console.log("new signup");
-  console.log(req.body);
+  console.log(username, password);
 };
 
 module.exports.login_post = (req, res) => {
+  const { username, password } = req.body; // need to have the same variable name that in the json structure from frontend
+
   res.send("user login requested");
   console.log("user login");
-  console.log(req.body);
+  console.log(username, password);
 };

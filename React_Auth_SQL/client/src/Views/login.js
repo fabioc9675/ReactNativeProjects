@@ -18,7 +18,7 @@ export default function LogIn() {
 
   function handleClick() {
     const jsonPipe = JSON.stringify({
-      user: "FabianLogin",
+      username: "FabianLogin",
       password: "test12345",
     });
     console.log(jsonPipe);
