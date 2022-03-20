@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { io } from "socket.io-client";
+import { toast } from "react-toastify";
 
 class SignUp extends Component {
   constructor(props) {
@@ -15,6 +17,18 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
+    // console.log("component was mounted");
+    const socket = io("http://localhost:4000", {
+      transports: ["websocket", "polling", "flashsocket"], // adding permissions to socket
+    });
+
+    // initialization of socket io in client side
+    socket.on("message", (message) => {
+      console.log(message);
+
+      toast("New User");
+    });
+
     // calling of endpoint
     axios
       .get("http://localhost:4000/signup")
@@ -42,8 +56,11 @@ class SignUp extends Component {
         this.setState({ request: response.data });
       })
       .catch((error) => {
-        this.setState({ request: error.USER_MAIL });
-        console.error(error);
+        this.setState({
+          request:
+            error.USER_NAME + ":" + error.USER_PASS + ":" + error.USER_MAIL,
+        });
+        // console.error(error);
       });
   }
 

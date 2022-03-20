@@ -29,3 +29,34 @@ Include packages to development, it will be create under view-controller model
 - ejs, express `npm install ejs express`
 - Install router `npm install react-router react-router-dom`
 - in server install sequalize `npm install sequelize`
+- install socket.io in server side `npm install socket.io`
+- install socket.io in client side `npm install socket.io-client`
+
+### How to do conection between socketio and sequelizeError
+
+https://stackoverflow.com/questions/30348852/express-how-use-io-socket-emit-in-route-files
+
+I found a way.
+
+Before `app.use('/save', save);` needed to write following code in `app.js`
+
+`app.use(function(req, res, next) {`
+` req.io = io;`
+` next();`
+`});`
+
+and after this get io from req parameter in `save.js` for example
+
+`var express = require('express');`
+`var router = express.Router();`
+
+`router.post('/', function(req, res, next) {`
+` .....`
+` var io = req.io;`
+` io.emit('newTweet', 'test');`
+` .....`
+`});`
+
+`module.exports = router;`
+
+if you know better way than this one, please let me know.

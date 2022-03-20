@@ -1,44 +1,72 @@
 var Sequelize = require("sequelize"); //import sequelize
 var database = require("./database"); // importing connection database
 
-var User = database.define("USERs", {
-  USER_ID: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  USER_NAME: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: false,
-    unique: true,
-    validate: {
-      is: /^[a-z]+$/i, // matches this RegExp
-      notNull: { args: [true], msg: "Username cannot be null" }, // won't allow null
-      notEmpty: { args: [true], msg: "Username cannot be empty" }, // don't allow empty strings
-      len: { args: [5, 20], msg: "Username length must be greater than 5" }, // only allow values with length between 2 and 10
+var User = database.define(
+  "USERs",
+  {
+    USER_ID: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    USER_NAME: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: false,
+      unique: true,
+      validate: {
+        is: /^[a-z]+$/i, // matches this RegExp
+        notNull: { args: [true], msg: "Username cannot be null" }, // won't allow null
+        notEmpty: { args: [true], msg: "Username cannot be empty" }, // don't allow empty strings
+        len: { args: [5, 20], msg: "Username length must be greater than 5" }, // only allow values with length between 2 and 10
+      },
+    },
+    USER_PASS: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: false,
+      validate: {
+        notNull: { args: [true], msg: "Password cannot be null" }, // won't allow null
+        notEmpty: { args: [true], msg: "Password cannot be empty" }, // don't allow empty strings
+        len: { args: [5, 20], msg: "Password length must be greater than 5" }, // only allow values with length between 2 and 10
+      },
+    },
+    USER_TOKEN: Sequelize.STRING,
+    USER_MAIL: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: { args: [true], msg: "Email is invalid" },
+      },
     },
   },
-  USER_PASS: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: false,
-    validate: {
-      notNull: { args: [true], msg: "Password cannot be null" }, // won't allow null
-      notEmpty: { args: [true], msg: "Password cannot be empty" }, // don't allow empty strings
-      len: { args: [5, 20], msg: "Password length must be greater than 5" }, // only allow values with length between 2 and 10
+  {
+    hooks: {
+      // provdide events in the interaction with database
+      beforeValidate: function () {
+        console.log("before Validate");
+      },
+      afterValidate: function (req) {
+        console.log("after Validate");
+        console.log(req.dataValues.USER_NAME);
+      },
+      beforeCreate: function (req) {
+        console.log("before Create");
+        console.log(req.dataValues.USER_MAIL);
+      },
+      afterCreate: function () {
+        console.log("after Create");
+      },
+      beforeSave: function () {
+        console.log("before Save");
+      },
+      afterSave: function () {
+        console.log("after Save");
+      },
     },
-  },
-  USER_TOKEN: Sequelize.STRING,
-  USER_MAIL: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: { args: [true], msg: "Email is invalid" },
-    },
-  },
-});
+  }
+);
 
 module.exports = User;
 

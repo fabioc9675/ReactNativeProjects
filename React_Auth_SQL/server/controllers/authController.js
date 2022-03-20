@@ -2,7 +2,7 @@ var Users = require("../models/user");
 
 // handle errors
 const handleErrors = (err) => {
-  console.log(err.message, err.code);
+  // console.log(err.message, err.code);
   let error = { USER_NAME: "", USER_PASS: "", USER_MAIL: "" };
 
   // validation errors
@@ -27,10 +27,13 @@ module.exports.login_get = (req, res) => {
 
 module.exports.signup_post = async (req, res) => {
   const { USER_NAME, USER_PASS, USER_TOKEN, USER_MAIL } = req.body; // need to have the same variable name that in the json structure from frontend
+  const io = req.io; // load io component from server
 
   // res.send("new signup requested");
   console.log("new signup");
   console.log(USER_NAME, USER_PASS, USER_TOKEN, USER_MAIL);
+
+  io.emit("message", "Hola mundo"); // emit some message from socket
 
   try {
     const user = await Users.create({

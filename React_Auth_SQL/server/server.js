@@ -7,6 +7,15 @@ const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
+// socket connection
+const server = require("http").createServer(app);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    credentials: true,
+  },
+});
+
 var Task = require("./models/task");
 
 app.use(cors());
@@ -30,6 +39,15 @@ app.get("/task", async (req, res) => {
   res.json(response);
 });
 
+// socket initialization
+io.on("connection", (socket) => {
+  console.log("socket.io: User connected: ", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("socket.io: User disconnected: ", socket.id);
+  });
+});
+
 // function to add task
 app.post("/addTask", (req, res) => {
   const ADD_QUERY = `INSERT INTO TASKs(TASK_NAME) VALUES ("${req.body.task}")`;
@@ -48,9 +66,17 @@ app.get("/deleteTask", (req, res) => {
   res.send("delete task");
 });
 
+// this part is necessary to share io component with router functions
+app.use(function (req, res, next) {
+  req.io = io;
+  next();
+});
 // link server functions to authentication methods
 app.use(authRoutes);
 
-app.listen(4000, () => {
+// server initialization
+server.listen(4000, () => {
   console.log("running on port 4000");
 });
+
+module.exports = app;
