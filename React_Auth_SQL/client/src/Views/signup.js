@@ -28,8 +28,10 @@ class SignUp extends Component {
 
   handleClick() {
     const jsonPipe = JSON.stringify({
-      username: "FabianSignUp",
-      password: "test12345",
+      USER_NAME: "Fabian",
+      USER_PASS: "test12345",
+      USER_TOKEN: "thisIsAToken",
+      USER_MAIL: "thisisanemal@email.com",
     });
     console.log(jsonPipe);
 

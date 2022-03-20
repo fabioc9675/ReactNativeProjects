@@ -28,3 +28,4 @@ Include packages to development, it will be create under view-controller model
 
 - ejs, express `npm install ejs express`
 - Install router `npm install react-router react-router-dom`
+- in server install sequalize `npm install sequelize`
