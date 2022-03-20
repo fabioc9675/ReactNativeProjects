@@ -28,8 +28,8 @@ class SignUp extends Component {
 
   handleClick() {
     const jsonPipe = JSON.stringify({
-      USER_NAME: "Fabian",
-      USER_PASS: "test12345",
+      USER_NAME: "Felipe",
+      USER_PASS: "trest345",
       USER_TOKEN: "thisIsAToken",
       USER_MAIL: "thisisanemal@email.com",
     });
@@ -42,6 +42,7 @@ class SignUp extends Component {
         this.setState({ request: response.data });
       })
       .catch((error) => {
+        this.setState({ request: error.USER_MAIL });
         console.error(error);
       });
   }

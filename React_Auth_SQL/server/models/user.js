@@ -14,9 +14,9 @@ var User = database.define("USERs", {
     unique: true,
     validate: {
       is: /^[a-z]+$/i, // matches this RegExp
-      notNull: true, // won't allow null
-      notEmpty: true, // don't allow empty strings
-      len: [5, 20], // only allow values with length between 2 and 10
+      notNull: { args: [true], msg: "Username cannot be null" }, // won't allow null
+      notEmpty: { args: [true], msg: "Username cannot be empty" }, // don't allow empty strings
+      len: { args: [5, 20], msg: "Username length must be greater than 5" }, // only allow values with length between 2 and 10
     },
   },
   USER_PASS: {
@@ -24,9 +24,9 @@ var User = database.define("USERs", {
     allowNull: false,
     defaultValue: false,
     validate: {
-      notNull: true, // won't allow null
-      notEmpty: true, // don't allow empty strings
-      len: [5, 20], // only allow values with length between 2 and 10
+      notNull: { args: [true], msg: "Password cannot be null" }, // won't allow null
+      notEmpty: { args: [true], msg: "Password cannot be empty" }, // don't allow empty strings
+      len: { args: [5, 20], msg: "Password length must be greater than 5" }, // only allow values with length between 2 and 10
     },
   },
   USER_TOKEN: Sequelize.STRING,
@@ -35,7 +35,7 @@ var User = database.define("USERs", {
     allowNull: false,
     unique: true,
     validate: {
-      isEmail: true,
+      isEmail: { args: [true], msg: "Email is invalid" },
     },
   },
 });
