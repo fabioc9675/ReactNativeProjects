@@ -20,3 +20,8 @@ module.exports.checkAuth = (req, res) => {
     res.status(400).json({ user_id: 0 });
   }
 };
+
+module.exports.logout = (req, res) => {
+  res.cookie("jwt", "", { maxAge: 5 * 1000 });
+  res.status(201).json({ user_id: 0 });
+};

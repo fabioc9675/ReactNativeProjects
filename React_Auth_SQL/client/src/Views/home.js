@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 
 import TaskList from "../Components/taskList";
+import auth from "../Routes/auth";
 
 export default function Home() {
   // URL history
@@ -16,6 +17,9 @@ export default function Home() {
     }
     if (e.target.name === "signup") {
       navigate("/signup");
+    }
+    if (e.target.name === "logout") {
+      auth.logout();
     }
   }
 
@@ -44,6 +48,13 @@ export default function Home() {
           onClick={(e) => handleClick(e)}
         >
           Go SignUp
+        </button>
+        <button
+          className="ui red button basic"
+          name="logout"
+          onClick={(e) => handleClick(e)}
+        >
+          Go Logout
         </button>
       </div>
     </div>

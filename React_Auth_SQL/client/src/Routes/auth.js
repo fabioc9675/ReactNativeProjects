@@ -20,6 +20,10 @@ class Auth {
   }
 
   logout() {
+    axios.get("http://localhost:4000/authLogout", {
+      withCredentials: true,
+    });
+
     this.authenticated = false;
   }
 

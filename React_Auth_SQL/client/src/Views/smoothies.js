@@ -11,7 +11,7 @@ export default function Smoothies() {
 
   return (
     <div>
-      <div>I am Smoothies</div>
+      <div>Hola roca</div>
       <button className="ui primary button basic" onClick={handleClick}>
         Go Home
       </button>
