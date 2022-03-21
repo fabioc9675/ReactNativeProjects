@@ -4,7 +4,9 @@ import { io } from "socket.io-client";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
-export default function LogIn() {
+import auth from "../Routes/auth";
+
+export default function LogIn(props) {
   // URL history
   const navigate = useNavigate();
 
@@ -66,7 +68,8 @@ export default function LogIn() {
     logPost(jsonPipe)
       .then((response) => {
         setRequest(response.data.USER_ID);
-        navigate("/");
+        auth.login();
+        // navigate("/");
       })
       .catch((error) => {
         console.error(error);
