@@ -17,10 +17,13 @@ class SignUp extends Component {
       userpass: "",
       usermail: "",
       redirect: false,
+      userError: "",
+      mailError: "",
+      passError: "",
     };
 
     // Associate events with the component
-    // this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +59,8 @@ class SignUp extends Component {
     });
     console.log(jsonPipe);
 
+    this.setState({ userError: "", passError: "", mailError: "" });
+
     // calling of endpoint
 
     this.signPost(jsonPipe)
@@ -69,7 +74,7 @@ class SignUp extends Component {
         });
         this.setState({ redirect: true });
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error.response.data);
         this.setState({
           request:
@@ -78,6 +83,9 @@ class SignUp extends Component {
             error.response.data.USER_PASS +
             ":" +
             error.response.data.USER_MAIL,
+          userError: error.response.data.USER_NAME,
+          passError: error.response.data.USER_PASS,
+          mailError: error.response.data.USER_MAIL,
         });
         // console.error(error);
       });
@@ -121,6 +129,7 @@ class SignUp extends Component {
             ></input>
             <i className="users icon"></i>
           </div>
+          <div className="users error ">{this.state.userError}</div>
           <div className="ui divider"></div>
           <div className="ui left icon input">
             <input
@@ -134,6 +143,7 @@ class SignUp extends Component {
             ></input>
             <i className="mail icon"></i>
           </div>
+          <div className="email error">{this.state.mailError}</div>
           <div className="ui divider"></div>
           <div className="ui left icon input">
             <input
@@ -147,6 +157,7 @@ class SignUp extends Component {
             ></input>
             <i className="key icon"></i>
           </div>
+          <div className="password error">{this.state.passError}</div>
           <div className="ui divider"></div>
           <h4>{this.state.message}</h4>
 
@@ -156,7 +167,7 @@ class SignUp extends Component {
           >
             Send request
           </button>
-          <h4>{this.state.request}</h4>
+          {/*<h4>{this.state.request}</h4>*/}
         </form>
         <ToastContainer />
         {this.state.redirect && <Navigate to="/" replace={true} />}
