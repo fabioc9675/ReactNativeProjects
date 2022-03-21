@@ -6,6 +6,17 @@ const handleErrors = (err) => {
   // console.log(err.message, err.code);
   let error = { USER_NAME: "", USER_PASS: "", USER_MAIL: "" };
 
+  // incorrect email
+  if (err.message === "incorrect User or Email") {
+    error.USER_NAME = "Incorrect Username, not registered";
+    error.USER_MAIL = "Incorrect Email, not registered";
+  }
+
+  // incorrect password
+  if (err.message === "incorrect Password") {
+    error.USER_PASS = "Incorrect Password";
+  }
+
   // validation errors
   if (err.message.includes("Validation error")) {
     Object.values(err.errors).forEach((_error) => {
@@ -95,10 +106,11 @@ module.exports.login_post = async (req, res) => {
     });
     return res.status(200).json({ USER_ID: user.USER_ID }); // need the return because ERR_HTTP_HEADERS_SENT
   } catch (err) {
-    console.log(err);
+    const errors = handleErrors(err);
+    console.log(errors);
 
     io.emit("logMessage", err); // emit some message from socket
-    return res.status(400).json({});
+    return res.status(400).json(errors);
   }
 
   //  res.send("user login requested");

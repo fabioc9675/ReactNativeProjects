@@ -7,8 +7,16 @@ export default function Home() {
   // URL history
   const navigate = useNavigate();
   // function to navigate to smoothies
-  function handleClick() {
-    navigate("/smoothies");
+  function handleClick(e) {
+    if (e.target.name === "smoothie") {
+      navigate("/smoothies");
+    }
+    if (e.target.name === "login") {
+      navigate("/login");
+    }
+    if (e.target.name === "signup") {
+      navigate("/signup");
+    }
   }
 
   return (
@@ -16,8 +24,26 @@ export default function Home() {
       <div>Hi, I am Home</div>
       <TaskList />
       <div>
-        <button className="ui primary button basic" onClick={handleClick}>
+        <button
+          className="ui primary button basic"
+          name="smoothie"
+          onClick={(e) => handleClick(e)}
+        >
           Go Smoothies
+        </button>
+        <button
+          className="ui primary button basic"
+          name="login"
+          onClick={(e) => handleClick(e)}
+        >
+          Go Login
+        </button>
+        <button
+          className="ui primary button basic"
+          name="signup"
+          onClick={(e) => handleClick(e)}
+        >
+          Go SignUp
         </button>
       </div>
     </div>

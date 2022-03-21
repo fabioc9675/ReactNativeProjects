@@ -2,8 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 export default function LogIn() {
+  // URL history
+  const navigate = useNavigate();
+
   const [message, setMessage] = useState();
   const [request, setRequest] = useState();
   const [username, setUsername] = useState();
@@ -34,7 +38,15 @@ export default function LogIn() {
       .catch((error) => {
         console.error(error);
       });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
+
+  function handleBackClick() {
+    navigate("/");
+  }
 
   function handleClick() {
     const jsonPipe = JSON.stringify({
@@ -54,6 +66,7 @@ export default function LogIn() {
     logPost(jsonPipe)
       .then((response) => {
         setRequest(response.data.USER_ID);
+        navigate("/");
       })
       .catch((error) => {
         console.error(error);
@@ -133,13 +146,16 @@ export default function LogIn() {
         </div>
         <div className="password error">{passError}</div>
         <div className="ui divider"></div>
-        <h4>{message}</h4>
+        {/*<h4>{message}</h4>*/}
 
-        <button
-          className="ui primary button basic"
-          onClick={() => handleClick()}
-        >
+        <button className="ui green button basic" onClick={() => handleClick()}>
           Send request
+        </button>
+        <button
+          className="ui red button basic"
+          onClick={() => handleBackClick()}
+        >
+          Cancel request
         </button>
         <h4>{request}</h4>
       </form>

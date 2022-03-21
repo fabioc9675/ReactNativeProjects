@@ -6,6 +6,8 @@ import { Navigate } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
 
+let socket;
+
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +30,7 @@ class SignUp extends Component {
 
   componentDidMount() {
     // console.log("component was mounted");
-    const socket = io("http://localhost:4000", {
+    socket = io("http://localhost:4000", {
       transports: ["websocket", "polling", "flashsocket"], // adding permissions to socket
     });
 
@@ -48,6 +50,14 @@ class SignUp extends Component {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  componentWillUnmount() {
+    socket.disconnect();
+  }
+
+  handleBackClick() {
+    this.setState({ redirect: true });
   }
 
   handleClick() {
@@ -162,11 +172,18 @@ class SignUp extends Component {
           <h4>{this.state.message}</h4>
 
           <button
-            className="ui primary button basic"
+            className="ui green button basic"
             onClick={() => this.handleClick()}
           >
             Send request
           </button>
+          <button
+            className="ui red button basic"
+            onClick={() => this.handleBackClick()}
+          >
+            Cancel request
+          </button>
+
           {/*<h4>{this.state.request}</h4>*/}
         </form>
         <ToastContainer />
