@@ -9,6 +9,9 @@ export default function LogIn() {
   const [username, setUsername] = useState();
   const [userpass, setUserpass] = useState();
   const [usermail, setUsermail] = useState();
+  const [userError, setUserError] = useState();
+  const [passError, setPassError] = useState();
+  const [mailError, setMailError] = useState();
 
   useEffect(() => {
     // console.log("component was mounted");
@@ -42,6 +45,10 @@ export default function LogIn() {
     });
     console.log(jsonPipe);
 
+    setUserError("");
+    setPassError("");
+    setMailError("");
+
     // calling of endpoint
 
     logPost(jsonPipe)
@@ -51,8 +58,15 @@ export default function LogIn() {
       .catch((error) => {
         console.error(error);
         setRequest(
-          error.USER_NAME + ":" + error.USER_PASS + ":" + error.USER_MAIL
+          error.response.data.USER_NAME +
+            ":" +
+            error.response.data.USER_PASS +
+            ":" +
+            error.response.data.USER_MAIL
         );
+        setUserError(error.response.data.USER_NAME);
+        setPassError(error.response.data.USER_PASS);
+        setMailError(error.response.data.USER_MAIL);
       });
   }
 
@@ -88,6 +102,7 @@ export default function LogIn() {
           ></input>
           <i className="users icon"></i>
         </div>
+        <div className="users error ">{userError}</div>
         <div className="ui divider"></div>
         <div className="ui left icon input">
           <input
@@ -101,6 +116,7 @@ export default function LogIn() {
           ></input>
           <i className="mail icon"></i>
         </div>
+        <div className="email error">{mailError}</div>
         <div className="ui divider"></div>
         <div className="ui left icon input">
           <input
@@ -114,6 +130,7 @@ export default function LogIn() {
           ></input>
           <i className="key icon"></i>
         </div>
+        <div className="password error">{passError}</div>
         <div className="ui divider"></div>
         <h4>{message}</h4>
 

@@ -72,12 +72,14 @@ module.exports.signup_post = async (req, res) => {
 };
 
 module.exports.login_post = (req, res) => {
-  const { username, password } = req.body; // need to have the same variable name that in the json structure from frontend
+  const { USER_NAME, USER_PASS, USER_TOKEN, USER_MAIL } = req.body; // need to have the same variable name that in the json structure from frontend
   const io = req.io; // load io component from server
+
+  // res.send("new signup requested");
+  console.log("new login");
+  console.log(USER_NAME, USER_PASS, USER_TOKEN, USER_MAIL);
 
   io.emit("logMessage", "Trying to do login"); // emit some message from socket
 
   res.send("user login requested");
-  console.log("user login");
-  console.log(username, password);
 };
