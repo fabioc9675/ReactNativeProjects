@@ -33,7 +33,7 @@ module.exports.signup_post = async (req, res) => {
   console.log("new signup");
   console.log(USER_NAME, USER_PASS, USER_TOKEN, USER_MAIL);
 
-  io.emit("message", "Registering New User"); // emit some message from socket
+  io.emit("signMessage", "Registering New User"); // emit some message from socket
 
   try {
     const user = await Users.create({
@@ -57,6 +57,9 @@ module.exports.signup_post = async (req, res) => {
 
 module.exports.login_post = (req, res) => {
   const { username, password } = req.body; // need to have the same variable name that in the json structure from frontend
+  const io = req.io; // load io component from server
+
+  io.emit("logMessage", "Trying to do login"); // emit some message from socket
 
   res.send("user login requested");
   console.log("user login");

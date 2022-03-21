@@ -12,6 +12,9 @@ class SignUp extends Component {
     this.state = {
       message: "", // database message
       request: "", // database request
+      username: "",
+      userpass: "",
+      usermail: "",
     };
 
     // Associate events with the component
@@ -25,7 +28,7 @@ class SignUp extends Component {
     });
 
     // initialization of socket io in client side
-    socket.on("message", (message) => {
+    socket.on("signMessage", (message) => {
       console.log(message);
 
       toast(message.toString());
@@ -44,10 +47,10 @@ class SignUp extends Component {
 
   handleClick() {
     const jsonPipe = JSON.stringify({
-      USER_NAME: "Felipe",
-      USER_PASS: "trest345",
+      USER_NAME: this.state.username,
+      USER_PASS: this.state.userpass,
       USER_TOKEN: "thisIsAToken",
-      USER_MAIL: "thisisanemal@email.com",
+      USER_MAIL: this.state.usermail,
     });
     console.log(jsonPipe);
 
@@ -55,7 +58,12 @@ class SignUp extends Component {
 
     this.signPost(jsonPipe)
       .then((response) => {
-        this.setState({ request: response.data });
+        this.setState({
+          request: response.data,
+          username: "",
+          userpass: "",
+          usermail: "",
+        });
       })
       .catch((error) => {
         this.setState({
@@ -64,6 +72,10 @@ class SignUp extends Component {
         });
         // console.error(error);
       });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
   }
 
   // async function to make the request to the database
@@ -84,16 +96,58 @@ class SignUp extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Sign Up</h1>
-        <h2>{this.state.message}</h2>
-        <button
-          className="ui primary button basic"
-          onClick={() => this.handleClick()}
-        >
-          Send request
-        </button>
-        <h2>{this.state.request}</h2>
+      <div className="ui raised very padded text container segment">
+        <form className="ui form" onSubmit={this.handleSubmit}>
+          <h1>Sign Up Form</h1>
+          <div className="ui left icon input">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={this.state.username}
+              onChange={(e) => {
+                this.setState({ username: e.target.value });
+              }}
+            ></input>
+            <i className="users icon"></i>
+          </div>
+          <div className="ui divider"></div>
+          <div className="ui left icon input">
+            <input
+              type="email"
+              name="usermail"
+              placeholder="Email"
+              value={this.state.usermail}
+              onChange={(e) => {
+                this.setState({ usermail: e.target.value });
+              }}
+            ></input>
+            <i className="mail icon"></i>
+          </div>
+          <div className="ui divider"></div>
+          <div className="ui left icon input">
+            <input
+              type="password"
+              name="userpass"
+              placeholder="Password"
+              value={this.state.userpass}
+              onChange={(e) => {
+                this.setState({ userpass: e.target.value });
+              }}
+            ></input>
+            <i className="key icon"></i>
+          </div>
+          <div className="ui divider"></div>
+          <h4>{this.state.message}</h4>
+
+          <button
+            className="ui primary button basic"
+            onClick={() => this.handleClick()}
+          >
+            Send request
+          </button>
+          <h4>{this.state.request}</h4>
+        </form>
         <ToastContainer />
       </div>
     );
