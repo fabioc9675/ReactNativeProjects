@@ -80,6 +80,30 @@ var User = database.define(
   }
 );
 
+// static method to login user
+User.login = async function (username, userpass, usermail) {
+  console.log("Hola Fabian");
+  // console.log(username + ": " + userpass + ": " + usermail);
+
+  // ask for user information
+  const user = await this.findOne({
+    where: { USER_NAME: username, USER_MAIL: usermail },
+  });
+
+  // compare password
+  if (user) {
+    console.log(user);
+    const auth = await bcrypt.compare(userpass, user.USER_PASS);
+    // if thre is authentication
+    if (auth) {
+      console.log("correct password");
+      return user;
+    }
+    throw Error("incorrect Password");
+  }
+  throw Error("incorrect User or Email");
+};
+
 module.exports = User;
 
 /* 

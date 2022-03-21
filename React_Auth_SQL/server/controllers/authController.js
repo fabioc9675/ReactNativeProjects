@@ -71,7 +71,7 @@ module.exports.signup_post = async (req, res) => {
   }
 };
 
-module.exports.login_post = (req, res) => {
+module.exports.login_post = async (req, res) => {
   const { USER_NAME, USER_PASS, USER_TOKEN, USER_MAIL } = req.body; // need to have the same variable name that in the json structure from frontend
   const io = req.io; // load io component from server
 
@@ -81,5 +81,25 @@ module.exports.login_post = (req, res) => {
 
   io.emit("logMessage", "Trying to do login"); // emit some message from socket
 
-  res.send("user login requested");
+  // make a comparisons with database data
+  try {
+    const user = await Users.login(USER_NAME, USER_PASS, USER_MAIL);
+    io.emit("logMessage", "Login successfully"); // emit some message from socket
+
+    // create and send token, create JsonWebToken
+    const token = createToken(user.USER_ID);
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: maxAge * 1000,
+    });
+    return res.status(200).json({ USER_ID: user.USER_ID }); // need the return because ERR_HTTP_HEADERS_SENT
+  } catch (err) {
+    console.log(err);
+
+    io.emit("logMessage", err); // emit some message from socket
+    return res.status(400).json({});
+  }
+
+  //  res.send("user login requested");
 };

@@ -53,7 +53,7 @@ export default function LogIn() {
 
     logPost(jsonPipe)
       .then((response) => {
-        setRequest(response.data);
+        setRequest(response.data.USER_ID);
       })
       .catch((error) => {
         console.error(error);
@@ -81,6 +81,7 @@ export default function LogIn() {
         // Overwrite Axios's automatically set Content-Type
         "Content-Type": "application/json",
       },
+      withCredentials: true, // necessary to receive cookies
     });
 
     return response;
