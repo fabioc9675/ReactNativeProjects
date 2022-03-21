@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 
 const connection = require("./models/database");
 const authRoutes = require("./routes/authRoutes");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -20,6 +21,7 @@ var Task = require("./models/task");
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 // function to get all task
 app.get("/task", async (req, res) => {
@@ -73,6 +75,27 @@ app.use(function (req, res, next) {
 });
 // link server functions to authentication methods
 app.use(authRoutes);
+
+// cookies initialization
+app.get("/set-cookies", (req, res) => {
+  // set a cookie un web browser
+  // res.setHeader("Set-Cookie", "newUser=true");
+  res.cookie("newUser", false);
+  res.cookie("isEmployee", true, {
+    maxAge: 1000 * 60 * 60 * 24,
+    secure: false,
+    httpOnly: true,
+  }); // duration of the cookie, 1 day, secure:true is to use just with HTTPS, httpOnly:true, just allow access with http
+  res.send("you got the cookies");
+});
+
+app.get("/read-cookies", (req, res) => {
+  // asking for cookies
+  const cookies = req.cookies;
+  console.log(cookies);
+
+  res.json(cookies);
+});
 
 // server initialization
 server.listen(4000, () => {
