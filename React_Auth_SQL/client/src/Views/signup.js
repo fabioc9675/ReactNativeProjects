@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
 import { ToastContainer, toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -15,6 +16,7 @@ class SignUp extends Component {
       username: "",
       userpass: "",
       usermail: "",
+      redirect: false,
     };
 
     // Associate events with the component
@@ -58,17 +60,24 @@ class SignUp extends Component {
 
     this.signPost(jsonPipe)
       .then((response) => {
+        console.log(response);
         this.setState({
-          request: response.data,
+          request: response.data.USER_NAME,
           username: "",
           userpass: "",
           usermail: "",
         });
+        this.setState({ redirect: true });
       })
-      .catch((error) => {
+      .catch(function (error) {
+        console.log(error.response.data);
         this.setState({
           request:
-            error.USER_NAME + ":" + error.USER_PASS + ":" + error.USER_MAIL,
+            error.response.data.USER_NAME +
+            ":" +
+            error.response.data.USER_PASS +
+            ":" +
+            error.response.data.USER_MAIL,
         });
         // console.error(error);
       });
@@ -150,6 +159,7 @@ class SignUp extends Component {
           <h4>{this.state.request}</h4>
         </form>
         <ToastContainer />
+        {this.state.redirect && <Navigate to="/" replace={true} />}
       </div>
     );
   }

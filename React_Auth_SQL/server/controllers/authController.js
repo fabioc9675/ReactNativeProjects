@@ -59,7 +59,7 @@ module.exports.signup_post = async (req, res) => {
       secure: false,
       maxAge: maxAge * 1000,
     });
-    res.status(201).send(user.USER_NAME); // .send("new signup requested");
+    res.status(201).json(user); // .send("new signup requested");
   } catch (error) {
     const errors = handleErrors(error);
     console.log(errors);
