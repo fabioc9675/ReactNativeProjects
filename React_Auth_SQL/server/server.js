@@ -19,7 +19,13 @@ const io = require("socket.io")(server, {
 
 var Task = require("./models/task");
 
-app.use(cors());
+// config permisions to use crdentials and send cokies
+const corsConfig = {
+  origin: true,
+  credentials: true,
+};
+
+app.use(cors(corsConfig));
 app.use(bodyParser.json());
 app.use(cookieParser());
 

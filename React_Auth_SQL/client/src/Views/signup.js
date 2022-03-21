@@ -88,6 +88,7 @@ class SignUp extends Component {
           // Overwrite Axios's automatically set Content-Type
           "Content-Type": "application/json",
         },
+        withCredentials: true, // necessary to receive cookies
       }
     );
 

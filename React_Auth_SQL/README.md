@@ -2,6 +2,10 @@
 
 Application to configurate SQL server and REACT Frontend
 
+## Tutorial
+
+https://www.youtube.com/playlist?list=PL4cUxeGkcC9iqqESP8335DA5cRFp8loyp
+
 ## Frontend
 
 It is necessary to install react in root folder
@@ -33,6 +37,7 @@ Include packages to development, it will be create under view-controller model
 - install socket.io in client side `npm install socket.io-client`
 - Install bcrypt to hash the password `npm install bcrypt`
 - Install cookie parser `npm install cookie-parser`
+- Install jwt in both `npm install jsonwebtoken`
 
 ### How to do conection between socketio and sequelizeError
 
