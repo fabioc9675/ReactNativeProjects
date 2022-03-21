@@ -31,6 +31,7 @@ Include packages to development, it will be create under view-controller model
 - in server install sequalize `npm install sequelize`
 - install socket.io in server side `npm install socket.io`
 - install socket.io in client side `npm install socket.io-client`
+- Install bcrypt to hash the password `npm install bcrypt`
 
 ### How to do conection between socketio and sequelizeError
 

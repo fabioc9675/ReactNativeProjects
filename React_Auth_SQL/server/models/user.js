@@ -1,5 +1,6 @@
 var Sequelize = require("sequelize"); //import sequelize
 var database = require("./database"); // importing connection database
+const bcrypt = require("bcrypt"); // Use to encryp or hash the password
 
 var User = database.define(
   "USERs",
@@ -18,7 +19,7 @@ var User = database.define(
         is: /^[a-z]+$/i, // matches this RegExp
         notNull: { args: [true], msg: "Username cannot be null" }, // won't allow null
         notEmpty: { args: [true], msg: "Username cannot be empty" }, // don't allow empty strings
-        len: { args: [5, 20], msg: "Username length must be greater than 5" }, // only allow values with length between 2 and 10
+        len: { args: [5, 40], msg: "Username length must be greater than 5" }, // only allow values with length between 2 and 10
       },
     },
     USER_PASS: {
@@ -28,7 +29,7 @@ var User = database.define(
       validate: {
         notNull: { args: [true], msg: "Password cannot be null" }, // won't allow null
         notEmpty: { args: [true], msg: "Password cannot be empty" }, // don't allow empty strings
-        len: { args: [5, 20], msg: "Password length must be greater than 5" }, // only allow values with length between 2 and 10
+        len: { args: [5, 40], msg: "Password length must be greater than 5" }, // only allow values with length between 2 and 10
       },
     },
     USER_TOKEN: Sequelize.STRING,
@@ -58,8 +59,19 @@ var User = database.define(
       afterCreate: function () {
         console.log("after Create");
       },
-      beforeSave: function () {
+      beforeSave: async function (req) {
+        // crypting the password
+        const salt = await bcrypt.genSalt();
+
         console.log("before Save");
+        // console.log(req.dataValues.USER_PASS);
+        // console.log(salt);
+
+        req.dataValues.USER_PASS = await bcrypt.hash(
+          req.dataValues.USER_PASS,
+          salt
+        );
+        // console.log(req.dataValues.USER_PASS);
       },
       afterSave: function () {
         console.log("after Save");

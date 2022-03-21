@@ -33,6 +33,8 @@ module.exports.signup_post = async (req, res) => {
   console.log("new signup");
   console.log(USER_NAME, USER_PASS, USER_TOKEN, USER_MAIL);
 
+  io.emit("message", "Registering New User"); // emit some message from socket
+
   try {
     const user = await Users.create({
       USER_NAME: USER_NAME,
@@ -46,6 +48,10 @@ module.exports.signup_post = async (req, res) => {
     const errors = handleErrors(error);
     console.log(errors);
     res.status(400).json(errors);
+    io.emit(
+      "message",
+      errors.USER_NAME + "; " + errors.USER_PASS + "; " + errors.USER_MAIL
+    ); // emit some message from socket
   }
 };
 

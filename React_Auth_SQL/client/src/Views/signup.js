@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 class SignUp extends Component {
   constructor(props) {
@@ -26,7 +28,7 @@ class SignUp extends Component {
     socket.on("message", (message) => {
       console.log(message);
 
-      toast("New User");
+      toast(message.toString());
     });
 
     // calling of endpoint
@@ -92,6 +94,7 @@ class SignUp extends Component {
           Send request
         </button>
         <h2>{this.state.request}</h2>
+        <ToastContainer />
       </div>
     );
   }
