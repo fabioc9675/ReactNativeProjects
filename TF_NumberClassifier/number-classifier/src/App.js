@@ -11,7 +11,7 @@ function App() {
   const canvasRef = useRef(null);
   const smallRef = useRef(null);
   const contextRef = useRef(null);
-  // const smallCtxRef = useRef(null);
+  const smallCtxRef = useRef(null);
 
   const [model, setModel] = useState();
   const [isDrawing, setIsDrawing] = useState(false);
@@ -51,15 +51,15 @@ function App() {
     context.scale(2, 2);
     context.lineCap = "round";
     context.strokeStyle = "black";
-    context.lineWidth = 5;
+    context.lineWidth = 10;
     contextRef.current = context;
 
-    // const smallCtxRef = smallCanvas.getContext("2d");
-    // smallCtxRef.scale(2, 2);
-    // smallCtxRef.lineCap = "round";
-    // smallCtxRef.strokeStyle = "black";
-    // smallCtxRef.lineWidth = 5;
-    // smallCtxRef.current = context;
+    const smallContext = smallCanvas.getContext("2d");
+    // smallContext.scale(2, 2);
+    // smallContext.lineCap = "round";
+    // smallContext.strokeStyle = "black";
+    // smallContext.lineWidth = 20;
+    smallCtxRef.current = smallContext;
   }, []);
 
   const startDrawing = ({ nativeEvent }) => {
@@ -92,12 +92,35 @@ function App() {
     );
   };
 
-  const copyHandle = () => {
-    resample_single(canvasRef.current, 28, 28, smallRef.current);
-  };
-
   const predictHandle = () => {
-    console.log("prediction");
+    if (model != null) {
+      console.log("prediction");
+
+      resample_single(canvasRef.current, 28, 28, smallRef.current);
+
+      var imgData = smallCtxRef.current.getImageData(0, 0, 28, 28);
+      var arr = []; // el arreglo completo
+      var arr28 = []; // al llegar a 28 posiciones se pone en "arr" como un nuevo arreglo
+      for (var p = 0; p < imgData.data.length; p += 4) {
+        var valor = imgData.data[p + 3] / 255;
+        arr28.push([valor]); // Agregar al array arr28 y normalizar de 0 a 1
+        if (arr28.length === 28) {
+          arr.push(arr28);
+          arr28 = [];
+        }
+      }
+
+      arr = [arr]; // es necesario meter el arreglo en otro arreglo para que tensorflow fucnione, esto por ser un tensor 4d en la forma 1, 28, 28, 1
+
+      // creacion de variables para el modelo
+      var tensor4d = tf.tensor4d(arr);
+      var resultados = model.predict(tensor4d).dataSync();
+      var mayorIndice = resultados.indexOf(Math.max.apply(null, resultados));
+
+      setTextOut(mayorIndice);
+      console.log(resultados);
+      console.log("Prediccion = ", mayorIndice);
+    }
   };
 
   return (
@@ -115,8 +138,10 @@ function App() {
         <canvas ref={smallRef} style={{ border: "2px solid black" }} />
       </div>
       <button onClick={eraseHandle}>Borrar</button>
-      <button onClick={copyHandle}>Copiar</button>
       <button onClick={predictHandle}>Predict</button>
+      <div>
+        <h1>prediccion = {textOut}</h1>
+      </div>
     </div>
   );
 }
