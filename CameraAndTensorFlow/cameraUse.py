@@ -32,6 +32,8 @@ def main():
 
     cap = cv2.VideoCapture(1)
 
+    texto = ''
+
     if cap.isOpened():
         ret, frame = cap.read()
     else:
@@ -50,6 +52,18 @@ def main():
         # ret, o4 = cv2.threshold(frame, th, max_val, cv2.THRESH_TOZERO_INV)
         # ret, o5 = cv2.threshold(frame, th, max_val, cv2.THRESH_TRUNC)
 
+        font = cv2.FONT_HERSHEY_SIMPLEX
+
+        # Use putText() method for
+        # inserting text on video
+        cv2.putText(frame,
+                    texto,
+                    (50, 50),
+                    font, 1,
+                    (0, 255, 255),
+                    2,
+                    cv2.LINE_4)
+
         cv2.imshow(windowName[0], frame)
         # cv2.imshow(windowName[0], o1)
         # cv2.imshow(windowName[1], o2)
@@ -61,11 +75,14 @@ def main():
         # print(prediccion)
 
         if (prediccion == 0):
-            print('cuchara')
+            texto = 'Spoon'
+            print('spoon')
         elif (prediccion == 1):
-            print('cuchillo')
+            texto = 'Knife'
+            print('knife')
         elif (prediccion == 2):
-            print('tenedor')
+            texto = 'Fork'
+            print('fork')
 
         if cv2.waitKey(1) == 27:
             break
