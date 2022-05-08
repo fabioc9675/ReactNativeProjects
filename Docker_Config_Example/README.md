@@ -19,4 +19,4 @@ Please use just official docker images
 - to stop container use `docker stop <container id>`
 
 - To specify parameters `docker run --rm -d -t --name=<NAME> -p <LOCALPORT>:<DOCKERPORT> <Image>:<Version>`
-- To specify parameters and link current folder `docker run --rm -d -t --name=<NAME> -p <LOCALPORT>:<DOCKERPORT> --mount src="(pwd)",target=/app <Image>:<Version>`
+- To specify parameters and link current folder `docker run --rm -d -t --name=<NAME> -p <LOCALPORT>:<DOCKERPORT> --mount src="(pwd)",target=/app,type=bind <Image>:<Version>`
