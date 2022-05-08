@@ -20,3 +20,10 @@ Please use just official docker images
 
 - To specify parameters `docker run --rm -d -t --name=<NAME> -p <LOCALPORT>:<DOCKERPORT> <Image>:<Version>`
 - To specify parameters and link current folder `docker run --rm -d -t --name=<NAME> -p <LOCALPORT>:<DOCKERPORT> --mount src="(pwd)",target=/app,type=bind <Image>:<Version>`
+
+## Use of Docker compose
+
+It is to use multiple docker containers at the same time
+
+- need to create `docker-compose.yaml` file
+- use `docker-compose up` to run the container
