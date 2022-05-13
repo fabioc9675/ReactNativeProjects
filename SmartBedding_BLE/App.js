@@ -27,7 +27,12 @@ export default class SB_BLE extends Component {
       deviceid: "",
       serviceUUID: "",
       characteristicsUUID: "",
+      characteristics_TXID: "6E400003-B5A3-F393-E0A9-E50E24DCCA9E",
+      characteristics_RXID: "6E400002-B5A3-F393-E0A9-E50E24DCCA9E",
+      characteristics_NOID: "6E400004-B5A3-F393-E0A9-E50E24DCCA9E",
       text1: "Hello BLE",
+      text_rx: "None",
+      text_no: "None",
       makedata: [],
       showToast: false,
       notificationReceiving: false,
@@ -250,7 +255,7 @@ export default class SB_BLE extends Component {
       device
         .writeCharacteristicWithResponseForService(
           this.state.serviceUUID,
-          this.state.characteristicsUUID,
+          this.state.characteristics_RXID,
           sendData
         )
         .then((characteristic) => {
@@ -261,7 +266,7 @@ export default class SB_BLE extends Component {
           console.log(
             this.state.serviceUUID,
             "Characteristic",
-            this.state.characteristicsUUID
+            this.state.characteristics_RXID
           );
         })
         .catch((error) => console.log(error));
@@ -279,11 +284,14 @@ export default class SB_BLE extends Component {
       device
         .readCharacteristicForService(
           this.state.serviceUUID,
-          this.state.characteristicsUUID
+          this.state.characteristics_TXID
         )
         .then((character) => {
           console.log("Read.......");
           console.log(base64.decode(character.value));
+          this.setState({
+            text_rx: base64.decode(character.value),
+          });
         })
         .catch((error) => console.log(error));
     } else {
@@ -299,7 +307,7 @@ export default class SB_BLE extends Component {
     if (device) {
       device.monitorCharacteristicForService(
         this.state.serviceUUID,
-        this.state.characteristicsUUID,
+        this.state.characteristics_NOID,
         (error, characteristic) => {
           if (error) {
             console.log(error);
@@ -307,6 +315,9 @@ export default class SB_BLE extends Component {
           if (characteristic) {
             console.log("monitor.......");
             console.log(base64.decode(characteristic.value));
+            this.setState({
+              text_no: base64.decode(characteristic.value),
+            });
           }
         }
       );
@@ -344,6 +355,10 @@ export default class SB_BLE extends Component {
               </TouchableOpacity>
             )}
           />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.listText}> {this.state.text_rx}</Text>
+          <Text style={styles.listText}> {this.state.text_no}</Text>
         </View>
         <View style={styles.fotter}>
           <Button title={"Ack"} onPress={() => this.readMessage()} />
@@ -408,5 +423,10 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     width: 280,
     justifyContent: "space-between",
+  },
+  textContainer: {
+    flex: 1,
+    flexDirection: "column",
+    fontSize: 20,
   },
 });
