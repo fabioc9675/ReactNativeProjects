@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "bootswatch/dist/zephyr/bootstrap.min.css";
+import "bootswatch/dist/yeti/bootstrap.min.css";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App title="Hola Mundo" />
+    <App title="React and Typescript" />
   </React.StrictMode>
 );
 

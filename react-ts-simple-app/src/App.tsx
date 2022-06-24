@@ -1,16 +1,12 @@
 import { useState } from "react";
 import "./App.css";
+import TaskList from "./components/TaskList";
+import { Task } from "./interfaces/Task";
+import logo from "./logo.svg";
 
 interface Props {
   // permite crear un tipo de dato para controlar la entrada a App
   title: string;
-}
-
-interface Task {
-  id: number;
-  title: string;
-  description: string;
-  completed: boolean;
 }
 
 function App({ title }: Props) {
@@ -25,14 +21,20 @@ function App({ title }: Props) {
   ]);
 
   return (
-    <div className="App">
-      <h1>{title}</h1>
-
-      {tasks.map((task) => (
-        <div>
-          <h2>{task.title}</h2>
+    <div className="bg-dark text-white" style={{ height: "100vh" }}>
+      {/* Navbar */}
+      <nav className="navbar navbar-dark bg-primary">
+        <div className="container">
+          <a href="/" className="navbar-brand">
+            <img src={logo} alt="React Logo" style={{ width: "4rem" }} />
+            {title}
+          </a>
         </div>
-      ))}
+      </nav>
+
+      <main className="container p-4">
+        <TaskList tasks={tasks} />
+      </main>
     </div>
   );
 }
