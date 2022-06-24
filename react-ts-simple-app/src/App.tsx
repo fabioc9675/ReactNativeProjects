@@ -21,6 +21,11 @@ function App({ title }: Props) {
     },
   ]);
 
+  // funcion para añadir tareas al arreglo
+  const addNewTask = (task: Task) => {
+    setTasks([...tasks, task]); // copio lo que haya en task y agrego el nuevo task
+  };
+
   return (
     <div className="bg-dark text-white" style={{ height: "100vh" }}>
       {/* Navbar */}
@@ -37,7 +42,7 @@ function App({ title }: Props) {
       <main className="container p-4">
         <div className="row">
           <div className="col-md-4">
-            <TaskForm />
+            <TaskForm addNewTask={addNewTask} />
           </div>
           <div className="col-md-8">
             <div className="row">

@@ -1,7 +1,14 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
+import { Task } from "../interfaces/Task";
 
-function TaskForm() {
+interface Props {
+  addNewTask: (task: Task) => void; // asi se define una funcion como propiedad y no retorna nada, recibe como parametro una task
+}
+
+type HandleInputChange = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>; // creacion de un tipo de dato para las entradas de texto
+
+function TaskForm({ addNewTask }: Props) {
   const [task, setTask] = useState({
     title: "",
     description: "",
@@ -9,16 +16,21 @@ function TaskForm() {
 
   const handleInputChange = ({
     target: { name, value },
-  }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  }: HandleInputChange) => {
     // el evento de cambio e viene de un elemento HTMLInput o HTMLTextArea es tipiado desde e.target
     setTask({ ...task, [name]: value });
+  };
+
+  const handleNewTask = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // cancela el almacenamiento
+    addNewTask(task);
   };
 
   return (
     <div className="card card-body bg-secondary text-dark">
       <h1>Add Task</h1>
 
-      <form>
+      <form onSubmit={handleNewTask}>
         <input
           type="text"
           placeholder="Write a title"
