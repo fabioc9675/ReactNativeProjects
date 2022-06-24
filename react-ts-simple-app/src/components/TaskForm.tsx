@@ -8,11 +8,13 @@ interface Props {
 
 type HandleInputChange = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>; // creacion de un tipo de dato para las entradas de texto
 
+const initialState = {
+  title: "",
+  description: "",
+};
+
 function TaskForm({ addNewTask }: Props) {
-  const [task, setTask] = useState({
-    title: "",
-    description: "",
-  });
+  const [task, setTask] = useState(initialState);
 
   const handleInputChange = ({
     target: { name, value },
@@ -24,6 +26,7 @@ function TaskForm({ addNewTask }: Props) {
   const handleNewTask = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // cancela el almacenamiento
     addNewTask(task);
+    setTask(initialState);
   };
 
   return (
@@ -37,6 +40,7 @@ function TaskForm({ addNewTask }: Props) {
           name="title"
           className="form-control mb-3 rounded-0 shadow-none border-0"
           onChange={handleInputChange}
+          value={task.title}
         />
         <textarea
           name="description"
@@ -44,6 +48,7 @@ function TaskForm({ addNewTask }: Props) {
           placeholder="Write a description"
           className="form-control mb-3 shadow-none border-0"
           onChange={handleInputChange}
+          value={task.description}
         ></textarea>
 
         <button className="btn-primary">
