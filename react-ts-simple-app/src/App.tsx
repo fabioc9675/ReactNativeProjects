@@ -1,12 +1,13 @@
 import { useState } from "react";
 import "./App.css";
+import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 import { Task } from "./interfaces/Task";
 import logo from "./logo.svg";
 
 interface Props {
   // permite crear un tipo de dato para controlar la entrada a App
-  title: string;
+  title?: string; // Con el signo de ? indica que la propiedad no es requerida
 }
 
 function App({ title }: Props) {
@@ -27,13 +28,23 @@ function App({ title }: Props) {
         <div className="container">
           <a href="/" className="navbar-brand">
             <img src={logo} alt="React Logo" style={{ width: "4rem" }} />
-            {title}
+            {title && <h1>{title}</h1>}{" "}
+            {/*Valida si existe el titulo al ser opcional */}
           </a>
         </div>
       </nav>
 
       <main className="container p-4">
-        <TaskList tasks={tasks} />
+        <div className="row">
+          <div className="col-md-4">
+            <TaskForm />
+          </div>
+          <div className="col-md-8">
+            <div className="row">
+              <TaskList tasks={tasks} />
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   );

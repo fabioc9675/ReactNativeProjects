@@ -1,5 +1,9 @@
 # Getting Started with Create React App
 
+## Fabian's Recommendations
+
+There is some modules that are not designed to work with typescript, when we try to install they present an error because doesn't found the types, then the possibble solution to this trouble is to search in the repository `dafinitelyType` the types definition for the module
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App title="React and Typescript" />
+    <App />
   </React.StrictMode>
 );
 
