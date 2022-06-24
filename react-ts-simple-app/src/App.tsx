@@ -21,9 +21,19 @@ function App({ title }: Props) {
     },
   ]);
 
+  const getCurrentTimeStamp = (): number => new Date().getTime();
+
   // funcion para añadir tareas al arreglo
   const addNewTask = (task: Task) => {
-    setTasks([...tasks, task]); // copio lo que haya en task y agrego el nuevo task
+    setTasks([
+      ...tasks,
+      { ...task, id: getCurrentTimeStamp(), completed: false },
+    ]); // copio lo que haya en task y agrego el nuevo task
+  };
+
+  // funcion para eliminar tarea
+  const deleteTask = (id: number) => {
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
   return (
@@ -46,7 +56,7 @@ function App({ title }: Props) {
           </div>
           <div className="col-md-8">
             <div className="row">
-              <TaskList tasks={tasks} />
+              <TaskList tasks={tasks} deleteTask={deleteTask} />
             </div>
           </div>
         </div>
