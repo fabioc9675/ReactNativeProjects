@@ -15,10 +15,20 @@ app.use(require("./routes/littlezoom.routes"));
 app.use(express.static(__dirname + "/public"));
 
 io.on("connection", (socket) => {
+  console.log("socket connected: ", socket.id);
   socket.on("stream", (image) => {
     // emmit the evento to all the sockects connected
     socket.broadcast.emit("stream", image);
   });
 });
+
+// io.on("connection", function (socket) {
+//   socket.on("stream", function (data) {
+//     // listen on client emit 'data'
+//     var frame = Buffer.from(data, "base64").toString();
+
+//     io.emit("stream", frame); // emmit to socket
+//   });
+// });
 
 module.exports = http;

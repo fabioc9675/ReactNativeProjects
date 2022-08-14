@@ -15,3 +15,11 @@ https://www.youtube.com/watch?v=59m39yLQjio
 - To init the server app use `npm init`
 - Install Express and SocketIO with `npm install --save express socket.io`
 - Install nodemon as dependency `npm install nodemon -D`
+
+- Install `cv2` on python `pip install opencv-python`
+- Install `socketio` on python `pip install "python-socketio[client]"`
+- Install `imutils` on python `pip install imutils`
+
+## Information
+
+- documentation about python socketio `https://python-socketio.readthedocs.io/en/latest/client.html`
