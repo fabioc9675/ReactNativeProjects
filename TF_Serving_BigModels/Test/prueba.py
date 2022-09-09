@@ -16,7 +16,7 @@ class NumpyArrayEncoder(JSONEncoder):
 
 # respuesta = requests.get('https://tse3.mm.bing.net/th?id=OIP.NRCDGEHDW-CZejKKhLSigAHaFh&pid=Api&P=0&w=222&h=165')
 # img = Image.open(BytesIO(respuesta.content))
-img = Image.open("Photos/cuchara.jpg")
+img = Image.open("Test/Photos/cuchara.jpg")
 img = np.array(img).astype(float)/255
 img = cv2.resize(img, (224, 224))
 img = img.reshape(-1, 224, 224, 3)
