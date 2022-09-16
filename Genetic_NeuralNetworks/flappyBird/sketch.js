@@ -11,7 +11,7 @@ var bird;
 var pipes = [];
 
 function setup() {
-    createCanvas(400, 600);
+    createCanvas(600, 600);
     bird = new Bird();
 
     pipes.push(new Pipe());
@@ -33,10 +33,11 @@ function draw() {
         }
     }
 
+    bird.think(pipes);
     bird.update();
     bird.show();
 
-    if (frameCount % 100 == 0) {
+    if (frameCount % 75 == 0) {
         pipes.push(new Pipe());
     }
 }

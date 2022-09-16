@@ -16,6 +16,8 @@ class Bird {
         this.gravity = 0.8;
         this.lift = -12;
         this.velocity = 0;
+
+        this.brain = new NeuralNetwork(4, 4, 1); // inputs(4: y bird, x pipe, y up pipe, y down pipe), hidden(4: don't care), outputs(1: jump or not)
     }
 
     // Display the bird
@@ -28,6 +30,33 @@ class Bird {
     // Jump up
     up() {
         this.velocity += this.lift;
+    }
+
+    // This is the key function now that decides
+    // if it should jump or not jump!
+    think(pipes) {
+        // find the closest pipe
+        let closest = null;
+        let closestD = Infinity;
+        for (let i = 0; i < pipes.length; i++) {
+            let d = pipes[i].x - this.x;
+            if (d < closestD && d > 0) {
+                closest = pipes[i];
+                closestD = d;
+            }
+        }
+
+        let inputs = [];
+        inputs[0] = this.y / height; // normalizing data
+        inputs[1] = closest.top / height;
+        inputs[2] = closest.bottom / height;
+        inputs[3] = closest.x / width;
+
+        //let inputs = [2.0, 0.5, 0.2, 0.3];
+        let output = this.brain.predict(inputs);
+        if (output > 0.5) {
+            this.up();
+        }
     }
 
     // Update bird's position based on velocity, gravity, etc.
