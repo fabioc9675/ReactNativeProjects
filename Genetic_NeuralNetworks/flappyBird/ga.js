@@ -5,22 +5,65 @@
 // This flappy bird implementation is adapted from:
 // https://youtu.be/cXgA1d_E-jY&
 
+let generations = 0;
+let lastScore = 0;
+let lastFitness = 0;
+
 function nextGeneration() {
     // calculate fitness
     calculateFitness();
 
     for (let i = 0; i < TOTAL; i++) {
-        birds[i] = new Bird();
+        birds[i] = pickOne();
+    }
+    savedBirds = []; // after next generation clean savedBirds
+
+    // generation information
+    generations++;
+    console.log(
+        "next generation = ",
+        generations,
+        ", score = ",
+        lastScore,
+        ", Fitness = ",
+        lastFitness
+    );
+
+    lastScore = 0;
+    lastFitness = 0;
+}
+
+function pickOne() {
+    var index = 0;
+    var r = random(1);
+
+    while (r > 0) {
+        r = r - savedBirds[index].fitness;
+        index++;
+    }
+    index--;
+
+    let bird = savedBirds[index];
+    let child = new Bird(bird.brain);
+    child.mutate(); // make a mutation in next generation
+
+    if (lastScore < bird.score) {
+        lastScore = bird.score;
+    }
+    if (lastFitness < bird.fitness) {
+        lastFitness = bird.fitness;
     }
 
-    function calculateFitness() {
-        let sun = 0;
-        for (let bird of birds) {
-            sum += bird.score;
-        }
+    return child;
+}
 
-        for (let bird of birds) {
-            bird.fitness += bird.score / sum; // normalizing
-        }
+function calculateFitness() {
+    let sum = 0;
+    for (let bird of savedBirds) {
+        sum += bird.score;
+    }
+
+    for (let bird of savedBirds) {
+        bird.fitness += bird.score / sum; // normalizing
     }
 }

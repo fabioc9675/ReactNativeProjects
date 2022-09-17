@@ -6,23 +6,30 @@
 // https://youtu.be/cXgA1d_E-jY&
 
 // How big is the population
-const TOTAL = 250;
+const TOTAL = 350;
 // All birds for any given population
 var birds = [];
+// All birds for any given population
+let savedBirds = [];
 // Pipes
 var pipes = [];
+
+let counter = 0;
 
 function setup() {
     createCanvas(600, 600);
     for (let i = 0; i < TOTAL; i++) {
         birds[i] = new Bird();
     }
-
-    pipes.push(new Pipe());
 }
 
 function draw() {
     background(0);
+
+    if (counter % 75 == 0) {
+        pipes.push(new Pipe());
+    }
+    counter++;
 
     for (var i = pipes.length - 1; i >= 0; i--) {
         pipes[i].show();
@@ -31,7 +38,8 @@ function draw() {
         // delete the birds
         for (let j = birds.length - 1; j >= 0; j--) {
             if (pipes[i].hits(birds[j])) {
-                birds.splice(j, 1);
+                // include into new matrix the delete bird
+                savedBirds.push(birds.splice(j, 1)[0]);
             }
         }
 
@@ -47,11 +55,9 @@ function draw() {
     }
 
     if (birds.length === 0) {
+        counter = 0;
         nextGeneration();
-    }
-
-    if (frameCount % 75 == 0) {
-        pipes.push(new Pipe());
+        pipes = [];
     }
 }
 
