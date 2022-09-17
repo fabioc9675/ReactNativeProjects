@@ -17,7 +17,10 @@ class Bird {
         this.lift = -12;
         this.velocity = 0;
 
-        this.brain = new NeuralNetwork(4, 4, 1); // inputs(4: y bird, x pipe, y up pipe, y down pipe), hidden(4: don't care), outputs(1: jump or not)
+        // Variables realte with the learning process
+        this.score = 0;
+        this.fitness = 0;
+        this.brain = new NeuralNetwork(4, 4, 2); // inputs(4: y bird, x pipe, y up pipe, y down pipe), hidden(4: don't care), outputs(1: jump or not)
     }
 
     // Display the bird
@@ -54,13 +57,15 @@ class Bird {
 
         //let inputs = [2.0, 0.5, 0.2, 0.3];
         let output = this.brain.predict(inputs);
-        if (output > 0.5) {
+        if (output[0] > output[1]) {
             this.up();
         }
     }
 
     // Update bird's position based on velocity, gravity, etc.
     update() {
+        this.score++;
+
         this.velocity += this.gravity;
         // this.velocity *= 0.9;
         this.y += this.velocity;
