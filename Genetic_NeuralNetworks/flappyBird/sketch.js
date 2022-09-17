@@ -19,6 +19,15 @@ let counter = 0;
 let cycles = 100;
 let slider;
 
+function keyPressed() {
+    if (key === "s") {
+        let bird = birds[0];
+        let json = bird.brain.serialize();
+        saveJSON(bird, "bird.json");
+        console.log(json);
+    }
+}
+
 function setup() {
     createCanvas(600, 600);
     slider = createSlider(1, 100, 1);

@@ -21,14 +21,14 @@ function nextGeneration() {
 
     // generation information
     generations++;
-    console.log(
-        "next generation = ",
-        generations,
-        ", score = ",
-        lastScore,
-        ", Fitness = ",
-        lastFitness
-    );
+    // console.log(
+    //     "next generation = ",
+    //     generations,
+    //     ", score = ",
+    //     lastScore,
+    //     ", Fitness = ",
+    //     lastFitness
+    // );
 
     prevFitness = lastFitness;
     lastScore = 0;
