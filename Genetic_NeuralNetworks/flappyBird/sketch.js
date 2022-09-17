@@ -16,49 +16,79 @@ var pipes = [];
 
 let counter = 0;
 
+let cycles = 100;
+let slider;
+
 function setup() {
     createCanvas(600, 600);
+    slider = createSlider(1, 100, 1);
     for (let i = 0; i < TOTAL; i++) {
         birds[i] = new Bird();
     }
+
+    // inicializacion de texto
+    textSize(20);
+    textAlign(LEFT, CENTER);
 }
 
 function draw() {
-    background(0);
+    for (let n = 0; n < slider.value(); n++) {
+        if (counter % 75 == 0) {
+            pipes.push(new Pipe());
+        }
+        counter++;
 
-    if (counter % 75 == 0) {
-        pipes.push(new Pipe());
-    }
-    counter++;
+        for (var i = pipes.length - 1; i >= 0; i--) {
+            pipes[i].update();
 
-    for (var i = pipes.length - 1; i >= 0; i--) {
-        pipes[i].show();
-        pipes[i].update();
+            // delete the birds
+            for (let j = birds.length - 1; j >= 0; j--) {
+                if (pipes[i].hits(birds[j])) {
+                    // include into new matrix the delete bird
+                    savedBirds.push(birds.splice(j, 1)[0]);
+                }
+            }
 
-        // delete the birds
-        for (let j = birds.length - 1; j >= 0; j--) {
-            if (pipes[i].hits(birds[j])) {
-                // include into new matrix the delete bird
-                savedBirds.push(birds.splice(j, 1)[0]);
+            if (pipes[i].offscreen()) {
+                pipes.splice(i, 1);
+            }
+
+            // delete the birds floor or silly
+            for (let i = birds.length - 1; i >= 0; i--) {
+                if (birds[i].offScreen()) {
+                    // include into new matrix the delete bird
+                    savedBirds.push(birds.splice(i, 1)[0]);
+                }
             }
         }
 
-        if (pipes[i].offscreen()) {
-            pipes.splice(i, 1);
+        for (let bird of birds) {
+            bird.think(pipes);
+            bird.update();
+        }
+
+        if (birds.length === 0) {
+            counter = 0;
+            nextGeneration();
+            pipes = [];
         }
     }
+    // All draw stuff
+    background(0);
 
     for (let bird of birds) {
-        bird.think(pipes);
-        bird.update();
         bird.show();
     }
 
-    if (birds.length === 0) {
-        counter = 0;
-        nextGeneration();
-        pipes = [];
+    for (let pipe of pipes) {
+        pipe.show();
     }
+
+    fill(255);
+    text("generation = " + generations, 420, 50);
+    text("Score = " + birds[0].score, 420, 80);
+    text("Fitness = " + nfc(prevFitness, 5), 420, 110);
+    text("Alive = " + birds.length, 420, 140);
 }
 
 // function keyPressed() {

@@ -8,6 +8,7 @@
 let generations = 0;
 let lastScore = 0;
 let lastFitness = 0;
+let prevFitness = 0;
 
 function nextGeneration() {
     // calculate fitness
@@ -29,6 +30,7 @@ function nextGeneration() {
         lastFitness
     );
 
+    prevFitness = lastFitness;
     lastScore = 0;
     lastFitness = 0;
 }

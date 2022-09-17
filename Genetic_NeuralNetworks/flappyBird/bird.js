@@ -25,7 +25,7 @@ class Bird {
 
         // gravity, lift and velocity
         this.gravity = 0.8;
-        this.lift = -12;
+        this.lift = -16;
         this.velocity = 0;
 
         // Variables realte with the learning process
@@ -34,7 +34,7 @@ class Bird {
         if (brain) {
             this.brain = brain.copy();
         } else {
-            this.brain = new NeuralNetwork(4, 4, 2); // inputs(4: y bird, x pipe, y up pipe, y down pipe), hidden(4: don't care), outputs(1: jump or not)
+            this.brain = new NeuralNetwork(5, 8, 2); // inputs(4: y bird, x pipe, y up pipe, y down pipe), hidden(4: don't care), outputs(1: jump or not)
         }
     }
 
@@ -50,6 +50,10 @@ class Bird {
         this.velocity += this.lift;
     }
 
+    offScreen() {
+        return this.y > height || this.y < 0;
+    }
+
     mutate() {
         this.brain.mutate(mutate);
     }
@@ -61,7 +65,7 @@ class Bird {
         let closest = null;
         let closestD = Infinity;
         for (let i = 0; i < pipes.length; i++) {
-            let d = pipes[i].x - this.x;
+            let d = pipes[i].x + pipes[i].w - this.x;
             if (d < closestD && d > 0) {
                 closest = pipes[i];
                 closestD = d;
@@ -73,10 +77,11 @@ class Bird {
         inputs[1] = closest.top / height;
         inputs[2] = closest.bottom / height;
         inputs[3] = closest.x / width;
+        inputs[4] = this.velocity / 20; // 20 is arbitrary to normalize velocity
 
         //let inputs = [2.0, 0.5, 0.2, 0.3];
         let output = this.brain.predict(inputs);
-        if (output[0] > output[1]) {
+        if (output[0] > output[1] && this.velocity >= 0) {
             this.up();
         }
     }
@@ -89,14 +94,14 @@ class Bird {
         // this.velocity *= 0.9;
         this.y += this.velocity;
 
-        if (this.y > height) {
-            this.y = height;
-            this.velocity = 0;
-        }
+        // if (this.y > height) {
+        //     this.y = height;
+        //     this.velocity = 0;
+        // }
 
-        if (this.y < 0) {
-            this.y = 0;
-            this.velocity = 0;
-        }
+        // if (this.y < 0) {
+        //     this.y = 0;
+        //     this.velocity = 0;
+        // }
     }
 }
