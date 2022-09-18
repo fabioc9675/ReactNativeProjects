@@ -9,6 +9,7 @@ let generations = 0;
 let lastScore = 0;
 let lastFitness = 0;
 let prevFitness = 0;
+let maxScore = 0;
 
 function nextGeneration() {
     // calculate fitness
@@ -16,6 +17,9 @@ function nextGeneration() {
 
     for (let i = 0; i < TOTAL; i++) {
         birds[i] = pickOne();
+    }
+    for (let i = 0; i < TOTAL; i++) {
+        savedBirds[i].dispose();
     }
     savedBirds = []; // after next generation clean savedBirds
 
@@ -29,6 +33,12 @@ function nextGeneration() {
     //     ", Fitness = ",
     //     lastFitness
     // );
+
+    // console.log(tf.memory().numTensors);
+
+    if (maxScore < lastScore) {
+        maxScore = lastScore;
+    }
 
     prevFitness = lastFitness;
     lastScore = 0;

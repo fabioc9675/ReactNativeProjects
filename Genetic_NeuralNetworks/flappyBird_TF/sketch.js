@@ -6,7 +6,7 @@
 // https://youtu.be/cXgA1d_E-jY&
 
 // How big is the population
-const TOTAL = 350;
+const TOTAL = 150;
 // All birds for any given population
 var birds = [];
 // All birds for any given population
@@ -30,6 +30,7 @@ function keyPressed() {
 
 function setup() {
     createCanvas(600, 600);
+    tf.setBackend("cpu");
     slider = createSlider(1, 100, 1);
     for (let i = 0; i < TOTAL; i++) {
         birds[i] = new Bird();
@@ -96,7 +97,8 @@ function draw() {
     fill(255);
     text("generation = " + generations, 420, 50);
     text("Score = " + birds[0].score, 420, 80);
-    text("Fitness = " + nfc(prevFitness, 5), 420, 110);
+    //text("Fitness = " + nfc(prevFitness, 5), 420, 110);
+    text("MaxScore = " + maxScore, 420, 110);
     text("Alive = " + birds.length, 420, 140);
 }
 

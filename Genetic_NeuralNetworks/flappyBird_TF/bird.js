@@ -5,17 +5,6 @@
 // This flappy bird implementation is adapted from:
 // https://youtu.be/cXgA1d_E-jY&
 
-// Mutation function to be passed into bird.brain
-function mutate(x) {
-    if (random(1) < 0.1) {
-        let offset = randomGaussian() * 0.5;
-        let newx = x + offset;
-        return newx;
-    } else {
-        return x;
-    }
-}
-
 class Bird {
     constructor(brain) {
         // position and size of bird
@@ -55,7 +44,11 @@ class Bird {
     }
 
     mutate() {
-        this.brain.mutate(mutate);
+        this.brain.mutate(0.1);
+    }
+
+    dispose() {
+        this.brain.dispose();
     }
 
     // This is the key function now that decides
