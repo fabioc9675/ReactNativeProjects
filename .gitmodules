@@ -1,0 +1,12 @@
+[submodule "SoftwareDevelopmentPrjs"]
+	path = SoftwareDevelopmentPrjs
+	url = https://github.com/fabioc9675/SoftwareDevelopmentPrjs.git
+[submodule "HardwareDevelopmentPrjs"]
+	path = HardwareDevelopmentPrjs
+	url = https://github.com/fabioc9675/HardwareDevelopmentPrjs.git
+[submodule "SignalProcessingPrjs"]
+	path = SignalProcessingPrjs
+	url = https://github.com/fabioc9675/SignalProcessingPrjs.git
+[submodule "MachineLearningPrjs"]
+	path = MachineLearningPrjs
+	url = https://github.com/fabioc9675/MachineLearningPrjs.git
